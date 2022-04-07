@@ -33,11 +33,10 @@
 </html>
 
  <cfif structKeyExists(form,'Submit')>
-<cfset struct_name = StructNew()> 
-<cfset s = StructInsert(struct_name, "#form.key_name#", "#form.value_name#",1)>  
+<cfset struct_name = StructNew("ordered")> 
+<cfset s = StructInsert(struct_name, "#form.key_name#", "#form.value_name#")>  
 
-<cfset myArray = arrayNew(1)>
-  <cfset arrayAppend(myArray, struct_name)>
+
   
   <cfset key=form.key_name>
   <cfset value=form.value_name>
@@ -49,13 +48,27 @@
     </cflock>
 </cfif>
 
+
+
 <cfif StructKeyExists(Session, "mystruct")>
-  <cfif IsDefined("key") AND  IsDefined("value") >
+  <cfif IsDefined("key") AND  IsDefined("value") >  
+<cfset Session.mystruct["#key#"] = #value#>
+ 
     <cfif NOT StructKeyExists(Session.mystruct,"#key#")>
-      <cfset Session.mystruct["#key#"] = #value#> 
+    <cfset Session.mystruct["#key#"] = #value#>
+    
+      
     </cfif>
   </cfif>
 </cfif>
-
+<cfset structArray = structKeyArray(Session.mystruct)>
+                                     <cfset sortedKeys = structArray.sort("text","asc")>
+                                     <cfdump var = #sortedKeys#>
 <cfdump var="#Session.mystruct#">	
+
+
+
+
+<!--- <cfset struct_sort=structSort(Session.mystruct, "text", "asc")>
+<cfdump var="#struct_sort#">---->
 </cfif>

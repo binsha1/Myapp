@@ -34,7 +34,7 @@
 
  <cfif structKeyExists(form,'Submit')>
 <cfset struct_name = StructNew()> 
-<cfset s = StructInsert(struct_name, "#form.key_name#", "#form.value_name#",1)>  
+<cfset s = StructInsert(struct_name, "#form.key_name#", "#form.value_name#")>  
 
 <cfset myArray = arrayNew(1)>
   <cfset arrayAppend(myArray, struct_name)>
@@ -51,9 +51,13 @@
 
 <cfif StructKeyExists(Session, "mystruct")>
   <cfif IsDefined("key") AND  IsDefined("value") >
-    <cfif NOT StructKeyExists(Session.mystruct,"#key#")>
-      <cfset Session.mystruct["#key#"] = #value#> 
-    </cfif>
+
+  <cfset Session.mystruct["#key#"] = #value#>
+    <!---<cfif NOT StructKeyExists(Session.mystruct,"#key#")>
+    <cfset Session.mystruct["#key#"] = #value#>
+    
+      
+    </cfif>--->
   </cfif>
 </cfif>
 
