@@ -10,3 +10,10 @@
     color:red;
     font-weight: bold;
 }
+.cform_div{
+    background: #acc7e0;
+    margin-top:5rem;
+}
+.cform_div h3{
+    padding-bottom: 1rem;
+}
