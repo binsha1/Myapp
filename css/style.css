@@ -17,3 +17,17 @@
 .cform_div h3{
     padding-bottom: 1rem;
 }
+.table_container{
+    margin:8rem 0rem;
+   background:#e4d2d2;
+}
+.evenNum{
+color:green;
+font-weight: 700;
+text-align: center;
+}
+.oddNum{
+color:blue;
+font-weight: 700;
+text-align: center;
+}

@@ -8,11 +8,12 @@
 
 </head>
 <script>
-function validateInput(form,cntrl,value)
+function validateInput()
 {
-if(isNaN(value)==true)
+    var v=document.getElementById('num').value;
+if(isNaN(v)==true)
 {
-    alert('Non numeric value entered')
+    alert('Non numeric value entered');
 }
 
 }
@@ -20,7 +21,7 @@ if(isNaN(value)==true)
 </script>
 
 <body>
-<div class='container py-5 cform_div'>
+<div class='container py-5 '>
 
 
 
@@ -29,7 +30,7 @@ if(isNaN(value)==true)
   <div class="form-group row">
     <label for="exampleInputEmail1" class="form-label col-sm-3" ></label>
    <div class='col-sm-9'>
-    <cfinput type="text" class="form-control" name="num_value" placeholder="Enter Numeric Value" onclick='validateInput();' >
+    <cfinput type="text" class="form-control" name="num_value" id='num' placeholder="Enter Numeric Value" onenter='validateInput();' >
    
   </div>
   </div>
@@ -44,7 +45,24 @@ if(isNaN(value)==true)
 
   </div>
 </cfform>
-
+<cfif structKeyExists(form,'Submit')>
+                        <cfset num = form.num_value>
+                        <cfif isNumeric(num)>
+                        <div class='text-center'>
+                            <cfloop from ="1" to =#num# index="i">
+                                <cfoutput>
+                                    <cfif #i# MOD 2 EQ 0>
+                                        <span class="evenNum text-center">#i#</span>
+                                    <cfelse>
+                                        <span class="oddNum text-center">#i#</span>
+                                    </cfif>
+                                    <br>
+                                </cfoutput>
+                             </cfloop>
+                             </div>
+                        
+</cfif>
+                    </cfif>
 </div>
 
 </body>
