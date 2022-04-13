@@ -30,7 +30,7 @@ if(isNaN(v)==true)
   <div class="form-group row">
     <label for="exampleInputEmail1" class="form-label col-sm-3" ></label>
    <div class='col-sm-9'>
-    <cfinput type="text" class="form-control" name="num_value" id='num' placeholder="Enter Numeric Value" onenter='validateInput();' >
+    <cfinput type="text" class="form-control" name="num_value" id='num' placeholder="Enter Numeric Value" >
    
   </div>
   </div>
@@ -40,7 +40,7 @@ if(isNaN(v)==true)
  <div class='form-group row pt-3'>
  
  <div class='col-sm-12 text-center'>
-  <cfinput type="submit" name="Submit"  value="Submit" class="btn btn-primary">
+  <cfinput type="submit" name="Submit"  value="Submit" class="btn btn-primary" onclick='return validateInput();' >
   </div>
 
   </div>
