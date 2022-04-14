@@ -31,3 +31,16 @@ color:blue;
 font-weight: 700;
 text-align: center;
 }
+.emp_form{
+    background: #669900;
+}
+.form-group.required .control-label:after { 
+    content:"*";
+    color:red;
+ }
+ #phoneField .h-space{
+    padding:0;
+  }
+ #phone-field .h-space::after {
+     content:"-"
+ }
