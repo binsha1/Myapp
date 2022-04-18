@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
 
-<title>User Table</title>
+<title>Login Form</title>
 
 </head>
 
@@ -20,37 +20,29 @@
 <div class='container py-5 cform_div'>
 
 
-<h3 class='text-center'>Subscribe Form </h3>
+<h3 class='text-center'>Login Form </h3>
 
-<cfform method='post' action="" enctype="multipart/form-data" name="img_form">
+<cfform method='post' action=""  name="img_form" class='col-lg-6 offset-lg-3 bg-white p-5'>
   <div class="form-group row">
-    <label for="exampleInputEmail1" class="form-label col-sm-3" >First  Name</label>
+    <label for="exampleInputEmail1" class="form-label col-sm-3" >User Name</label>
    <div class='col-sm-9'>
-    <cfinput type="text" class="form-control" name="first_name" placeholder="Enter First Name" id="f_name" required="yes">
+    <cfinput type="text" class="form-control" name="first_name" placeholder="Enter User Name" id="f_name" required="yes">
    
   </div>
   </div>
 
   <div class="form-group row pt-3">
-    <label for="exampleInputEmail1" class="form-label col-sm-3" >Email Id</label>
+    <label for="exampleInputEmail1" class="form-label col-sm-3" >Password</label>
    <div class='col-sm-9'>
-    <cfinput type="email" class="form-control" name="email_id" placeholder="Enter Email Address"  required="yes">
+    <cfinput type="password" class="form-control" name="pwd" placeholder="Enter Password"  required="yes">
   </div>
   </div>
 
-    <div class="form-group row pt-3 pl-3">
-    <div class='col-sm-3'></div>
-    <div class="form-check col-sm-9">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div
+   
  <div class='form-group row pt-3'>
  
  <div class='col-sm-12 text-center'>
-  <cfinput type="submit" name="Submit"  value="Submit" class="btn btn-primary" disabled>
+  <cfinput type="submit" name="Submit"  value="Submit" class="btn btn-primary" >
   </div>
 
   </div>
@@ -65,24 +57,7 @@
 
 
 
-<script>
-$(document).ready(function() {
-   alert('dfhfd');
-$("#f_name").change(function() {
- 
- $.ajax({
-         url: 'components/dbData.cfc',
-         type: 'POST',
-         datatype:"json",
-         data:{
-           method:"getData"
-           
-         }
-    });
-});
-});
 
-</script>
 
 
 

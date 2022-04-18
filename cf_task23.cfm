@@ -17,10 +17,14 @@
 
 <body class='emp_form'>
 <div class='container py-5 '>
+<cfparam name='Message' default = "value" >
 
-
-
-<cfform method='post' action="" enctype="multipart/form-data" name="img_form" class='col-lg-6 offset-lg-3 bg-white p-5'>
+<cfif #Message# eq '1'>
+<div class="alert alert-success col-lg-6 offset-lg-3" role="alert">
+  Data Saved Successfully
+</div>
+</cfif>
+<cfform method='post' action="" name="img_form" enctype='multipart/form-data' class='col-lg-6 offset-lg-3 bg-white p-5'>
 <div class='row justify-content-center'>
 <h3 >Employment Application</h3>
 <h5>Infinity Box Inc.</h5>
@@ -59,25 +63,7 @@
     <label for="exampleInputEmail1" class="form-label control-label " >When can you start? </label>
     <div class='col-lg-6'>
     <cfinput type='date' class='form-control' name='cdate' id='cdate'>
-   <!---<div class='row' >
-        <div class='col-sm-3'>
-        <cfinput type="text" name="mm" class='form-control h-space ' maxlength="2" > 
-        
-        <small  class="form-text text-muted">MM</small>
-        </div>/
-        <div class='col-sm-3'>
-        <cfinput type="text" name="dd" class='form-control h-space' maxlength="2" > 
-        <small  class="form-text text-muted">DD</small>
-        </div>/
-        <div class='col-sm-4'>
-        <cfinput type="text" name="yyyy" class='form-control h-space' maxlength="4" > 
-        <small  class="form-text text-muted">YYYY</small>
-        </div>
-        <div class='col-sm-3'>
-        <button class='btn btn-light'>
-       <i class='fa fa-calendar' id='full'></i></button>
-        </div>
-  </div>--->
+  
     
    </div>
   
@@ -94,7 +80,7 @@
   <div class="form-group pt-3 ">
     <label for="exampleInputEmail1" class="form-label " >Attach a Copy of Your Resume</label>
    
-    <cfinput type='file' name='img_file' accept='.pdf,.doc' aria-describedby="emailHelp">
+    <cfinput type='file' name='doc_file' accept='.pdf,.doc' aria-describedby="emailHelp">
     <div class='pt-2'>
   <small id="emailHelp" class="form-text text-muted">Word or PDF Documents Only</small>
   </div>
@@ -106,12 +92,12 @@
    <!---<cfinput type="number" name="salary" class='form-control'>  --->
    <div class='row' >$
         <div class='col-sm-4'>
-        <cfinput type="text" name="$" class='form-control h-space ' maxlength="3" > 
+        <cfinput type="text" name="dollar" class='form-control h-space ' maxlength="3" > 
         
         <small  class="form-text text-muted">Dollars</small>
         </div>.
         <div class='col-sm-4'>
-        <cfinput type="text" name="p2" class='form-control h-space' maxlength="3" > 
+        <cfinput type="text" name="cents" class='form-control h-space' maxlength="3" > 
         <small  class="form-text text-muted">Cents</small>
         </div>
         
@@ -150,24 +136,8 @@
 </div>
 <div class="form-group pt-3 required">
 <label  class="form-label control-label " >Phone </label>
-<div class='col-lg-10'>
-<div class='row' id='phone-field'>
-        <div class='col-sm-3'>
-        <cfinput type="text" name="p1" class='form-control h-space ' id="p1" maxlength="3" > 
-        
-        <small  class="form-text text-muted">###</small>
-        </div>-
-        <div class='col-sm-3'>
-        <cfinput type="text" name="p2" class='form-control h-space' id="p2" maxlength="3" > 
-        <small  class="form-text text-muted">###</small>
-        </div>-
-        <div class='col-sm-3'>
-        <cfinput type="text" name="p3" class='form-control h-space' id="p3" maxlength="4" > 
-        <small  class="form-text text-muted">###</small>
-        </div>
-
-   
-  </div>
+<div class='col-lg-5'>
+<cfinput type="text" name="phone" class='form-control' id='phone'>   
 
 </div>
   </div>
@@ -190,17 +160,7 @@
 
 
 <script>
-$(document).ready(function() {
- $('#full').datepicker({
-   onclick: function(dateText, inst) {
-        var pieces = dateText.split('/');
-        $('#day').val(pieces[0]);
-        $('#month').val(pieces[1]);
-        $('#year').val(pieces[2]);
-    }
-    
-});
-});
+
 function validateFields()
 {
     var select=document.getElementById('position').value;
@@ -208,10 +168,12 @@ function validateFields()
     var fname=document.getElementById('fname').value;
     var lname=document.getElementById('lname').value;
     var email=document.getElementById('email').value;
-     var p1=document.getElementById('p1').value;
-     var p2=document.getElementById('p2').value;
-     var p3=document.getElementById('p3').value;
-     alert(isNaN(p2));
+     var p1=document.getElementById('phone').value;
+     var date=document.getElementById('cdate').value;
+     var ph_length=p1.length;
+     
+  
+    
     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/ ;
     
     if(select=="")
@@ -223,6 +185,12 @@ function validateFields()
     else if(relocate==false)
     {
         alert("Select yes or no !!");
+        event.preventDefault();
+        return false;
+    }
+    else if (date =="")
+    {
+       alert("Date should not be empty");
         event.preventDefault();
         return false;
     }
@@ -263,60 +231,75 @@ function validateFields()
          event.preventDefault();
         return false;
     }
-    else if((isNaN(p1)  && isNaN(p2)  && isNaN(p3) ) )
+    else if (p1 =="")
+    {
+       alert("Phone Number should not be empty");
+         event.preventDefault();
+        return false;
+    }
+    else if(isNaN(p1) ==true)
     {
         alert("Phone should not be in string format");
          event.preventDefault();
         return false;
         
     }
-    /*else if((isNaN(p2) ==true ))
+    else if(ph_length!=10)
     {
-        alert("Phone should not be in string format");
+        alert("Phone length should be equal to 10");
          event.preventDefault();
         return false;
-        
     }
-    else if((isNaN(p3) ==true ))
-    {
-        alert("Phone should not be in string format");
-         event.preventDefault();
-        return false;
-        
-    }
-    else if(p1 =="" ))
-    {
-        alert("Phone should not be empty");
-         event.preventDefault();
-        return false;
-        
-    }
-    else if(p2 =="" ))
-    {
-        alert("Phone should not be empty");
-         event.preventDefault();
-        return false;
-        
-    }
-    else if(p3 =="" ))
-    {
-        alert("Phone should not be empty");
-         event.preventDefault();
-        return false;
-        
-    }*/
-
+   
+   
 
 
 
    
-    return true;
+   
 }
 </script>
 
 
 <cfif structKeyExists(form, "Submit")>
+
+<cfset thisDir = expandPath("./uploads")>
+
+
+<cfif len(trim(form.doc_file)) >
+
+
+<!--- Use the cffile tag to upload the image file. --->
+<cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload"
+nameconflict="overwrite">
+
+<cfset file_name=#fileupload.serverfile# >
+<cfelse>
+<cfset file_name="" >
+</cfif>
+
+<cfset salary=#form.dollar# & '.' & #form.cents#>
+<cfinvoke component="components.subscribe" method="insertDB" returnvariable="res">
+
+
+<cfinvokeargument name="position" value="#Form.position#"> 
+<cfinvokeargument name="relocate" value="#Form.relocate#">
+<cfinvokeargument name="cdate" value="#Form.cdate#">
+<cfinvokeargument name="p_url" value="#Form.p_url#">
+<cfinvokeargument name="file_name" value="#file_name#">
+<cfinvokeargument name="salary" value="#salary#">
+<cfinvokeargument name="f_name" value="#form.f_name#">
+<cfinvokeargument name="l_name" value="#form.l_name#">
+<cfinvokeargument name="email" value="#form.email#">
+<cfinvokeargument name="phone" value="#form.phone#">
+</cfinvoke>
+<!----
 <cfoutput>
-jklgljk
-</cfoutput>
+<cfquery name="subscribe" datasource="subscribe"> 
+
+INSERT INTO subscribe.subscribe(position,relocate,cdate,website,resume,salary,first_name,last_name,email_id,phone)
+VALUES ('#Form.position#', '#Form.relocate#', '#Form.cdate#','#Form.p_url#','#file_name#','#salary#',
+'#form.f_name#','#form.l_name#','#form.email#','#form.phone#') 
+</cfquery> 
+</cfoutput>---->
 </cfif>
