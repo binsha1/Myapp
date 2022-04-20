@@ -1,3 +1,5 @@
+
+
 <html>
 
 <head>
@@ -17,16 +19,44 @@
 
 
 <body>
+
+
+
 <div class='container py-5 cform_div'>
 
 
 <h3 class='text-center'>Login Form </h3>
+ <cfif structKeyExists(URL, 'logout')>
+<cfset authenticate_user=createObject("component","components.authenticateUser")>
+ <cfset userLogin=authenticate_user.doLogout()>
 
-<cfform method='post' action=""  name="img_form" class='col-lg-6 offset-lg-3 bg-white p-5'>
+</cfif>     
+
+<cfif structKeyExists(form, "Submit")>
+<cfset authenticate_user=createObject("component","components.authenticateUser")>
+<cfset errorMessage=authenticate_user.validateUser(form.user_name,form.pwd)>
+<cfif arrayIsEmpty(errorMessage)>
+
+  <cfset userLogin=authenticate_user.doLogin(form.user_name,form.pwd)>
+    <cfif userLogin EQ true>
+    <cflocation url="welcome.cfm">
+
+    <cfelse>
+<div class="alert alert-danger col-lg-6 offset-lg-3" role="alert">
+  Invalid Credentials
+</div>
+
+    </cfif>
+
+</cfif>
+
+
+</cfif>
+<cfform method='post'   name="img_form" class='col-lg-6 offset-lg-3 bg-white p-5'>
   <div class="form-group row">
     <label for="exampleInputEmail1" class="form-label col-sm-3" >User Name</label>
    <div class='col-sm-9'>
-    <cfinput type="text" class="form-control" name="first_name" placeholder="Enter User Name" id="f_name" required="yes">
+    <cfinput type="text" class="form-control" name="user_name" placeholder="Enter User Name" id="f_name" required="yes">
    
   </div>
   </div>
@@ -53,7 +83,6 @@
 </body>
 
 </html>
-
 
 
 

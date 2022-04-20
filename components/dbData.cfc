@@ -1,10 +1,12 @@
-<cfcomponent output="false">
+<cfcomponent >
 
-    <cffunction name="getData" access="remote" returnType="struct" returnFormat="json" output="false" />
-    <cfargument name="mail_id" type="string" required="true" /> 
-    <cfquery name="validate_email" datasource="validate_email"  >
-       SELECT * FROM validate_data
+    <cffunction name="getEmailData" access="public" returnType="boolean"  />
+    <cfargument name="u_email" type="string" required="true" /> 
+
+  <cfquery name="validate_email" datasource="validate_email"  >
+       SELECT * FROM validate_email.validate_data WHERE email_id="#arguments.u_email#"
     </cfquery>
-    <cfreturn validate_email />
+  
+    <cfreturn true />
     </cffunction>
  <cfcomponent>
