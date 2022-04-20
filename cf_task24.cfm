@@ -55,17 +55,21 @@
 
 </html>
 
+<cfif structKeyExists(form, "Submit")>
 
+<cfquery name="validate_email" datasource="validate_email"  >
+       INSERT INTO validate_email.validate_data(first_name,email_id) VALUES('#form.first_name#','#form.email_id#')
+    </cfquery>
+</cfif>
 
 
 <script>
 
   
 $("body").on('change', '#email_id', function() {
- var email=$('#email_id').val();
+ var email=$(this).val();
 
- $.ajax({
-   
+ $.ajax({   
          url: 'components/dbData.cfc',
          type: 'get',
          dataType:"json",
@@ -76,14 +80,14 @@ $("body").on('change', '#email_id', function() {
          },
          success:function(data)
          {
-           alert(data);
-           /*if(data==0)
+           
+           if(data==0)
            {
              $('#submit').prop('disabled', false);
            }
            else{
-             alert('error');
-           }*/
+             alert('Email Already Exists');
+           }
          }
 
          

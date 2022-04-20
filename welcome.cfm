@@ -38,6 +38,6 @@
 
 </body>
 <cfelse>
-<h3 class='text-center text-danger'>Invalid User</h3>
+<cflocation url='cf_task27.cfm'>
 </cfif>
 </html>
