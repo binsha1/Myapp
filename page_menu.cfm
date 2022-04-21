@@ -54,11 +54,11 @@ FROM cms_data.page
 <cfoutput query='page_data'>
 <tr>
 
-<td ><button type='button' class='btn btn-dark' data-toggle="tooltip" data-placement="top" title="#pagedesc#" data-id='#pageid#'>#pagename#</button></td>
+<td ><a class='btn btn-dark' href='page_details.cfm?id=#pageid#'>#pagename#<a/></td>
 
 
 </tr>
-<cfinclude template="modals.cfm">
+
 </cfoutput>
 </tbody>
 </table>
