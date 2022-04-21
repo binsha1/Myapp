@@ -6,7 +6,15 @@ SELECT * FROM word_data.word_count ORDER BY word_name DESC
 <cfparam  name="desc">
 <cfset wordData=createObject("component", "components.tagCloud")>
 <cfset structData=wordData.init("#desc#")>
+<<<<<<< HEAD
 
+=======
+<cfset sortData=StructSort(structData,"numeric","desc")>
+
+
+
+<cfdump var='#sortData#'>
+>>>>>>> 6bcd5a39d6a56954c7c20329cd63921d0f1ff7bd
 <cfoutput>
 <h3>Words in alphabetical Order</h3>
 </cfoutput>
