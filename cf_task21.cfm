@@ -24,6 +24,13 @@
   </div>
   </div>
 
+<div class="form-group row pt-3">
+    <label for="exampleInputEmail1" class="form-label col-sm-3" >Birthday Baby Email ID</label>
+   <div class='col-sm-9'>
+    <cfinput type="text" class="form-control" name="baby_mail" placeholder="Enter Birthday Baby Email ID"  required="yes">
+   
+  </div>
+  </div>
   <div class="form-group row pt-3">
     <label for="exampleInputEmail1" class="form-label col-sm-3" >Birthday Wishes</label>
    <div class='col-sm-9'>
@@ -53,7 +60,35 @@
 
 </html>
 
+<cfif structKeyExists(form, "Submit")>
 
+
+<cfset thisDir = expandPath("./uploads")>
+    <cfif len(trim(form.img_file)) >
+            <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
+            nameconflict="overwrite">
+
+            <cfset file_name=#fileupload.serverfile# >
+         
+            <cfset fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
+              <cfelse>
+              <cfset fileLoc="">
+            <cfoutput>'<script>alert('Please Upload File!')</script>'
+            </cfoutput>
+            </cfif>
+
+           
+<cfmail to="#form.baby_mail#" from="binshasr3@gmail.com" 
+subject="Happy Birthday" type="html"
+ > 
+<cfmailparam file="#fileLoc#" disposition="inline">
+Happy Birthday  #form.baby_name# !
+
+
+</cfmail>
+
+
+</cfif>
 
 
 
