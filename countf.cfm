@@ -8,7 +8,7 @@
 </head>
 
 <cfquery name='page' datasource='word_data'>
-SELECT * FROM word_data.word_count 
+SELECT * FROM read_data.read_count 
 
 </cfquery>
 
