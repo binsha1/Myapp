@@ -77,22 +77,18 @@
             </cfoutput>
             </cfif>
 
-<<<<<<< HEAD
            
-=======
-            <cfoutput>
-            #fileLoc#
-            </cfoutput>
->>>>>>> f5e6fca00d5d62b53f742a09d7e3f3c75eeb7d28
+         
 <cfmail to="#form.baby_mail#" from="binshasr3@gmail.com" 
-subject="Happy Birthday" type="html"
- > 
-<cfmailparam file="#fileLoc#" disposition="inline">
+subject="Happy Birthday" > 
+<cfmailparam file="#fileLoc#" disposition="inline"  contentID="image1">
+<img src="cid:image1">
 Happy Birthday  #form.baby_name# !
 
 
 </cfmail>
-
+<cfoutput>'<script>alert('Birthday wish sent successfully!')</script>'
+            </cfoutput>
 
 </cfif>
 

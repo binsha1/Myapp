@@ -21,10 +21,7 @@
 
 
 <cfif structKeyExists(form,'Submit')> 
-<cfoutput>
-#form.captchaText#
-#form.cHash#
-</cfoutput>
+
 <cfif hash((form.captchaText)) neq form.cHash>
 
  <h3 style="color:Red; font-style:italic" class='text-center pt-5'>
@@ -32,7 +29,7 @@
     </h3>
 <cfelse>
 <h3 style="color:Green; font-style:italic" class='text-center pt-5'>
-    <cfoutput>Email Address successfully subscribe our newsletter.</cfoutput>
+    <cfoutput> #form.mail_add# successfully subscribe our newsletter.</cfoutput>
     </h3>
 </cfif>
 </cfif>

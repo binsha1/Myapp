@@ -14,10 +14,12 @@
 <p><cfoutput>Last Friday Date : #DateFormat(fridayDate)#</cfoutput></p>
 
 <cfset dStartDate = createDate(year(now()), month(now()), 1 ) >
+
  
 <cfset dEndDate = dateAdd('d', -1, dateAdd('m', 1, dStartDate )) >
 <p>Last Day of Month: 
 <cfoutput>
+
 #DateFormat(dEndDate)#
 </cfoutput></p>
 

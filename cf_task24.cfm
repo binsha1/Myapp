@@ -61,7 +61,8 @@
        INSERT INTO validate_email.validate_data(first_name,email_id) VALUES('#form.first_name#','#form.email_id#')
     </cfquery>
 </cfif>
-
+<cfoutput>'<script>alert('Subscribed Successfully')</script>'
+</cfoutput>
 
 <script>
 

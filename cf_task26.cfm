@@ -59,6 +59,7 @@
 
             <cfset skeys=structKeyList(structData)>
 
+            <cftry>
             <cfloop list="#skeys#" index="i">
             
 
@@ -66,6 +67,13 @@
             INSERT INTO read_data.read_count(word_name) VALUES('#i#' )
             </cfquery>
             </cfloop>
+            <cfcatch type="database">
+            <cfoutput>Erroor
+            </cfoutput>
+            </cfcatch>
+            </cftry>
+
+            
 
             <cflocation url="countf.cfm?desc='#Contents#">
            

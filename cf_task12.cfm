@@ -16,7 +16,7 @@
   <div class="form-group row">
     <label for="exampleInputEmail1" class="form-label col-sm-3" >Enter Numeric Value</label>
    <div class='col-sm-9'>
-    <cfinput type="text" class="form-control" name="num10" placeholder="Number less than 10" validate="integer" range = "1,10" message="Number should be less than 10" required="yes">
+    <cfinput type="text" class="form-control" name="num" placeholder="Number less than 10" validate="integer" range = "1,10" message="Number should be less than 10" required="yes">
    
   </div></div>
  <div class='form-group row pt-3'>
@@ -30,13 +30,13 @@
 </div>
 
 
-<cfif isDefined("form.num10") neq "">
+<cfif structKeyExists(form, "Submit")>
 
 <cfquery name="user_data" datasource="user_inf">
  SELECT *
          FROM user_data
 </cfquery>
-<cfset num=form.num10>
+<cfset num=#form.num# >
 
 <div class='container py-5'>
 <table class='table table-bordered'>

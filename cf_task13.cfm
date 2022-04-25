@@ -28,7 +28,7 @@
   </div>
 </cfform>
 </div>
-<cfif isDefined(form.txtString) neq "">
+<cfif structKeyExists(form, "Submit")>
 <cfset sent="the quick brown fox jumps over the lazy dog">
 <cfset search_string=form.txtString>
 <cfset count_var=ListValueCount(sent,search_string," ")>

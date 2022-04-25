@@ -38,40 +38,44 @@ SELECT * FROM read_data.read_count
 </cfoutput>
 <cfloop query="page" >
 
-
-
 <cfif isNumeric('#page.word_name#') EQ 'NO'>
-    <cfif #structData["#page.word_name#"]# GT 3>
+    <cfif Len('#page.word_name#') GT 3>
         <cfif structKeyExists(structData, #page.word_name#)>
                
-            <cfif #structData["#page.word_name#" ]#  EQ 7>
+            <cfif #structData["#page.word_name#" ]#  EQ 5>
             <cfoutput>      
-               <h1 class='text-success'> 
+               <h1 class='text-secondary'> 
                -#page.word_name# ( #structData["#page.word_name#" ]#)
                         
                </h1>
                 </cfoutput>
-               
-               <cfelseif #structData["#page.word_name#" ]#  EQ 6>
+                <cfelseif #structData["#page.word_name#" ]#  EQ 4>
                 <cfoutput>      
-               <h2 class='text-primary'> 
+               <h2 class='text-danger'> 
                -#page.word_name# ( #structData["#page.word_name#" ]#)
                         
                </h2>
                 </cfoutput>
-                <cfelseif #structData["#page.word_name#" ]#  EQ 5>
+               <cfelseif #structData["#page.word_name#" ]#  EQ 3>
                 <cfoutput>      
                <h3 class='text-warning'> 
-              -#page.word_name# ( #structData["#page.word_name#" ]#)
+               -#page.word_name# ( #structData["#page.word_name#" ]#)
                         
                </h3>
                 </cfoutput>
-                <cfelseif #structData["#page.word_name#" ]#  EQ 4>
+                <cfelseif #structData["#page.word_name#" ]#  EQ 2>
                 <cfoutput>      
-               <h4 class='text-danger'> 
-               -#page.word_name# ( #structData["#page.word_name#" ]#)
+               <h4 class='text-success'> 
+              -#page.word_name# ( #structData["#page.word_name#" ]#)
                         
                </h4>
+                </cfoutput>
+                <cfelseif #structData["#page.word_name#" ]#  EQ 1>
+                <cfoutput>      
+               <h5 class='text-primary'> 
+               -#page.word_name# ( #structData["#page.word_name#" ]#)
+                        
+               </h5>
                 </cfoutput>
             </cfif>
 
@@ -90,39 +94,46 @@ SELECT * FROM read_data.read_count
 <h3>Result  in decreasing order of the count of words </h3>
 </cfoutput>
 <cfloop array="#sortData#" index="i" >
+<cfoutput>
 
+</cfoutput>
 <cfif isNumeric('#i#') EQ 'NO'>
-    <cfif #structData["#i#"]# GT 3>
+    <cfif Len('#i#') GT 3>
     <cfif structKeyExists(structData, #i#)>
-              
-            <cfif #structData["#i#" ]#  EQ 7>
+            <cfif #structData["#i#" ]#  EQ 5>
             <cfoutput>      
-               <h1 class='text-success'> 
+               <h1 class='text-secondary'> 
                -#i# ( #structData["#i#" ]#)
                         
                </h1>
                 </cfoutput>
-               
-               <cfelseif #structData["#i#" ]#  EQ 6>
+                <cfelseif #structData["#i#" ]#  EQ 4>
                 <cfoutput>      
-               <h2 class='text-primary'> 
+               <h2 class='text-danger'> 
                -#i# ( #structData["#i#" ]#)
                         
                </h2>
                 </cfoutput>
-                <cfelseif #structData["#i#" ]#  EQ 5>
+               <cfelseif #structData["#i#" ]#  EQ 3>
                 <cfoutput>      
                <h3 class='text-warning'> 
                -#i# ( #structData["#i#" ]#)
                         
                </h3>
                 </cfoutput>
-                <cfelseif #structData["#i#" ]#  EQ 4>
+                <cfelseif #structData["#i#" ]#  EQ 2>
                 <cfoutput>      
-               <h4 class='text-danger'> 
-               -#i# ( #structData["#i#" ]#)
+               <h4 class='text-success'> 
+              -#i# ( #structData["#i#" ]#)
                         
                </h4>
+                </cfoutput>
+                <cfelseif #structData["#i#" ]#  EQ 1>
+                <cfoutput>      
+               <h5 class='text-primary'> 
+               -#i# ( #structData["#i#" ]#)
+                        
+               </h5>
                 </cfoutput>
             </cfif>
        </cfif>
@@ -140,42 +151,50 @@ SELECT * FROM read_data.read_count
 <cfloop array="#sortLen#" index="i" >
 
 <cfif isNumeric('#i#') EQ 'NO'>
-    <cfif #structData["#i#"]# GT 3>
+    <cfif Len('#i#') GT 3>
         <cfif structKeyExists(structData, #i#)>
                 
-            <cfif #structData["#i#" ]#  EQ 7>
+            <cfif #structData["#i#" ]#  EQ 5>
             <cfoutput>      
-               <h1 class='text-success'> 
+               <h1 class='text-secondary'> 
                -#i# ( #structData["#i#" ]#)
                         
                </h1>
                 </cfoutput>
-               
-               <cfelseif #structData["#i#" ]#  EQ 6>
+                <cfelseif #structData["#i#" ]#  EQ 4>
                 <cfoutput>      
-               <h2 class='text-primary'> 
+               <h2 class='text-danger'> 
                -#i# ( #structData["#i#" ]#)
                         
                </h2>
                 </cfoutput>
-                <cfelseif #structData["#i#" ]#  EQ 5>
+               <cfelseif #structData["#i#" ]#  EQ 3>
                 <cfoutput>      
                <h3 class='text-warning'> 
                -#i# ( #structData["#i#" ]#)
                         
                </h3>
                 </cfoutput>
-                <cfelseif #structData["#i#" ]#  EQ 4>
+                <cfelseif #structData["#i#" ]#  EQ 2>
                 <cfoutput>      
-               <h4 class='text-danger'> 
-               -#i# ( #structData["#i#" ]#)
+               <h4 class='text-success'> 
+              -#i# ( #structData["#i#" ]#)
                         
                </h4>
+                </cfoutput>
+                <cfelseif #structData["#i#" ]#  EQ 1>
+                <cfoutput>      
+               <h5 class='text-primary'> 
+               -#i# ( #structData["#i#" ]#)
+                        
+               </h5>
                 </cfoutput>
             </cfif>
         </cfif>
 
     </cfif>
 </cfif>
+
+
 
 </cfloop>
