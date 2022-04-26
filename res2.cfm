@@ -1,5 +1,5 @@
 <cfset formNum=form.Number>
-        <cfswitch expression="#formNum#"> 
+<cfswitch expression="#formNum#"> 
     <cfcase value=1>Ok</cfcase>
     <cfcase value=2>Ok</cfcase> 
     <cfcase value=3>Fair</cfcase>

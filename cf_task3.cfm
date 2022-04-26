@@ -12,7 +12,6 @@
            <cfinput type = "Text" name = "Number"  required = "Yes" >
             <br>
             <cfinput type="Submit" name="SubmitBtn" value="Submit">
-
             
 
         </cfform>

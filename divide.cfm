@@ -11,5 +11,5 @@
         </cfif>
         <cfoutput>
             #i#
-            </cfoutput>
+        </cfoutput>
 </cfloop>

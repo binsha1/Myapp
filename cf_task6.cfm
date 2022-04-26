@@ -14,7 +14,7 @@
 </cfform>
 
 
-  
+  <cfif structKeyExists(form, "Submit")>
 
 <cfset struct_name=structNew()>
 
@@ -24,5 +24,5 @@
 <cfif structKeyExists(form,"SubmitBtn")>
 <cfdump var=#struct_name#>
 </cfif>
-
+</cfif>
 </div>

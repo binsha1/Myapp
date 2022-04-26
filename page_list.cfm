@@ -12,8 +12,7 @@
             
 <cfif structKeyExists(session, 'sessionUser')>
 <cfquery name='page_data' datasource='cms_data'>
-SELECT *
-FROM cms_data.page
+SELECT * FROM cms_data.page
 
 </cfquery>
 <div class='container  '>
