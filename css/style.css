@@ -53,3 +53,14 @@ text-align: center;
      margin-top: 3rem;
      background:#b1b28340;
  }
+ .sat_color{
+     color:red;
+     font-weight: 600;
+ }
+ .tue_color{
+     color:orange;
+ }
+ .thu_color{
+     color:black;
+     font-weight: 600;
+ }
