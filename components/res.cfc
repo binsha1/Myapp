@@ -52,7 +52,6 @@
         <cfset user_year=DateFormat(user_dob,"yyyy")>
         <cfset user_month=DateFormat(user_dob,"mm")>
         <cfset user_day=DateFormat(user_dob,"dd")>
-
         <cfset mom_year=DateFormat(mom_dob,"yyyy")>
         <cfset mom_month=DateFormat(mom_dob,"mm")>
         <cfset mom_day=DateFormat(mom_dob,"dd")>
@@ -73,12 +72,117 @@
     </cffunction>
 
     <cffunction  name="structFunc" access="remote">
-    <cfargument  name="key">
-    <cfargument  name="value">
-    <cfset struct_name=structNew()>
-    <cfset struct_name.Key=key>
-    <cfset struct_name.Value=value>
-    <cfreturn struct_name>
+        <cfargument  name="key">
+        <cfargument  name="value">
+        <cfset struct_name=structNew()>
+        <cfset struct_name.Key=key>
+        <cfset struct_name.Value=value>
+        <cfreturn struct_name>
+    </cffunction>
+
+    <cffunction  name="structFunc2" access="remote">
+        <cfargument  name="key_name">
+        <cfargument  name="value_name">       
+        <cfset struct_name=structNew()>
+        <cfset s = StructInsert(struct_name, "#key_name#", "#value_name#",1)>     
+        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">    
+        <cfif NOT StructKeyExists(Session, "mystruct")>
+            <cflock timeout=20 scope="Session" type="Exclusive">
+                <cfset Session.mystruct = structNew()>
+            </cflock>
+        </cfif>
+        <cfif StructKeyExists(Session, "mystruct")>        
+            <cfif IsDefined("key_name") AND  IsDefined("value_name") >           
+                <cfif NOT StructKeyExists(Session.mystruct,"#key_name#")>
+                    <cfset Session.mystruct["#key_name#"] = #value_name#> 
+                </cfif>
+            </cfif>
+        </cfif>
+        <cfreturn #session.mystruct#>
+    </cffunction>
+
+    <cffunction  name="structFunc3" access="remote">
+        <cfargument  name="key_name">
+        <cfargument  name="value_name">       
+        <cfset struct_name=structNew()>
+        <cfset s = StructInsert(struct_name, "#key_name#", "#value_name#",1)>     
+        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">    
+        <cfif NOT StructKeyExists(Session, "mystruct")>
+            <cflock timeout=20 scope="Session" type="Exclusive">
+                <cfset Session.mystruct = structNew()>
+            </cflock>
+        </cfif>
+        <cfif StructKeyExists(Session, "mystruct")>        
+            <cfif IsDefined("key_name") AND  IsDefined("value_name") >       
+                
+                    <cfset Session.mystruct["#key_name#"] = #value_name#> 
+                
+            </cfif>
+        </cfif>
+        <cfreturn #session.mystruct#>
+    </cffunction>
+
+    <cffunction  name="structFunc4" access="remote">
+        <cfargument  name="key_name">
+        <cfargument  name="value_name">       
+        <cfset struct_name=structNew()>
+        <cfset s = StructInsert(struct_name, "#key_name#", "#value_name#",1)>     
+        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">    
+        <cfif NOT StructKeyExists(Session, "mystruct")>
+            <cflock timeout=20 scope="Session" type="Exclusive">
+                <cfset Session.mystruct = structNew()>
+            </cflock>
+        </cfif>
+        <cfset yes_no= StructKeyExists(Session.mystruct,"#key_name#")>    
+       <cfif StructKeyExists(Session, "mystruct")>        
+            <cfif IsDefined("key_name") AND  IsDefined("value_name") >           
+                <cfif NOT StructKeyExists(Session.mystruct,"#key_name#")>
+                    <cfset Session.mystruct["#key_name#"] = #value_name#> 
+                </cfif>
+            </cfif>
+        </cfif>
+        <cfdump var="#session.mystruct#">
+        <cfreturn yes_no>
+    </cffunction>
+
+    <cffunction  name="structFunc5" access="remote">
+        <cfargument  name="key_name">
+        <cfargument  name="value_name">       
+        <cfset struct_name=structNew()>
+        <cfset s = StructInsert(struct_name, "#key_name#", "#value_name#",1)>     
+        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">    
+        <cfif NOT StructKeyExists(Session, "mystruct")>
+            <cflock timeout=20 scope="Session" type="Exclusive">
+                <cfset Session.mystruct = structNew()>
+            </cflock>
+        </cfif>
+        <cfif StructKeyExists(Session, "mystruct")>        
+            <cfif IsDefined("key_name") AND  IsDefined("value_name") >     
+                <cfset Session.mystruct["#key_name#"] = #value_name#> 
+            </cfif>
+        </cfif>
+        <cfset structArray = structKeyArray(Session.mystruct)>
+        <cfset sortedKeys = structArray.sort("text","asc")>     
+	    <cfdump var="#session.mystruct#">
+        <cfreturn #sortedKeys#>   
+    </cffunction>
+
+    <cffunction  name="queryFunc">
+        <cfquery name="user_data" datasource="user_inf">
+                SELECT * FROM user_data
+        </cfquery>
+        <cfreturn #user_data#>
+    </cffunction>
+
+    <cffunction  name="textFunc">
+        <cfargument  name="textString">
+        <cfset sent="the quick brown fox jumps over the lazy dog">        
+        <cfset count_var=ListValueCount(sent,textString," ")>
+        <cfreturn count_var>
+    </cffunction>
+
+    <cffunction  name="uploadImg">
+
     </cffunction>
 
 </cfcomponent>

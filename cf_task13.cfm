@@ -1,47 +1,46 @@
 <html>
-
 <head>
-<link rel="stylesheet" href = "css/style.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<title>User Table</title>
-
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
-
-<body>
-<div class='container py-5 cform_div'>
-
-<cfform method='post' action="">
-  <div class="form-group row">
-    <label for="exampleInputEmail1" class="form-label col-sm-3" >Enter Keyword: </label>
-   <div class='col-sm-9'>
-    <cfinput type="text" class="form-control" name="txtString" placeholder="Enter Text"  required="yes">
-   
-  </div></div>
- <div class='form-group row pt-3'>
- <div class='col-sm-4'></div>
- <div class='col-sm-4'>
-  <cfinput type="submit" name="Submit"  value="Submit" class="btn btn-success">
-  </div>
-  <div class='col-sm-4'></div>
-  </div>
-</cfform>
-</div>
-<cfif structKeyExists(form, "Submit")>
-<cfset sent="the quick brown fox jumps over the lazy dog">
-<cfset search_string=form.txtString>
-<cfset count_var=ListValueCount(sent,search_string," ")>
-
-<cfoutput>
-<p class='text-center'>
-Found keyword in #count_var# times</p>
-</cfoutput>
-
-</cfif>
-</body>
-
+ <body class='bg-success'>
+        <div class='container py-5' > 
+             <form name="nform" method="post" action="" class='col-lg-6 offset-lg-3 bg-white p-5'>
+                <h1 class='text-center pb-3'>Text Form</h1>
+                <div class="form-group row">
+                    <label class="form-label col-sm-4" >Enter Text</label>
+                    <div class='col-sm-8'>
+                        <input type = "text" class='form-control' name = "tname" required = "Yes">
+                    </div>
+                </div>                
+                <div class='form-group row pt-3'>
+                    <div class='col-sm-12 text-center'>
+                        <input type="Submit" name="Submit" value="Submit" class='btn btn-secondary'>
+                    </div>
+                </div>
+                <div class="row">
+                    <cfif structKeyExists(form, "Submit")>
+                        <cfset textString=form.tname>                        
+                        <cfset data=createObject("component","components.res")>                        
+                        <cfset cnt=data.textFunc(textString)>
+                        <cfif cnt GT 0>
+                            <cfoutput>
+                            <h3 class="text-success">Found keyword in #cnt# times</h3>
+                            </cfoutput>
+                        <cfelse>
+                            <h3 class="text-danger">Keyword Not Found</h3>
+                        </cfif>           
+                    </cfif>
+                </div>
+            </form>            
+        </div>
+    </body>
 </html>
+
+
 
 
 

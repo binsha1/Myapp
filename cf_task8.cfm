@@ -1,65 +1,43 @@
 <html>
-    <head>
-        <link rel="stylesheet" href = "css/style.css">
-        <title>Cf Structure</title>
-    </head>
-    <body>
-        
-                <div class = "cf_class">
-                                 
-               <cfform name="sform" action="">
-                      
-                                          
-                        <label>Key Text </label>
-                            <input type="text" name="key_name" 
-                            required placeholder="Key Text">
-                       
-                      <br><br>
-                      
-                                         
-                        <label> Value Text</label>
-                    <input type="text" name="value_name"  required placeholder="Value Text" >
-                       
-                    <br><br>
-                
-                        
-                            <input type="submit"  name="submit" 
-                            value="Submit"/>
-                        
-                    </cfform>
+<head>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+ <body class='bg-success'>
+        <div class='container py-5' > 
+             <form name="nform" method="post" action="" class='col-lg-6 offset-lg-3 bg-white p-5'>
+                <h1 class='text-center pb-3'>Structure Form</h1>
+                <div class="form-group row">
+                    <label class="form-label col-sm-4" >Enter Key</label>
+                    <div class='col-sm-8'>
+                        <input type = "text" class='form-control' name = "key_name" required = "Yes">
+                    </div>
                 </div>
-        
+                <div class="form-group row pt-3">
+                    <label class="form-label col-sm-4" >Enter Value</label>
+                    <div class='col-sm-8'>
+                        <input type = "text" class='form-control' name = "value_name" required = "Yes">
+                    </div>
+                </div>
+                <div class='form-group row pt-3'>
+                    <div class='col-sm-12 text-center'>
+                        <input type="Submit" name="Submit" value="Submit" class='btn btn-secondary'>
+                    </div>
+                </div>
+                <div class="row text-success">
+                    <cfif structKeyExists(form, "Submit")>
+                        <cfset key=form.key_name>
+                        <cfset value=form.value_name>
+                        <cfset data=createObject("component","components.res")>
+                        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">
+                        <cfset struct_data=data.structFunc3(key,value)>
+                        <cfdump var="#struct_data#">                       
+                    </cfif>
+                </div>
+            </form>            
+        </div>
     </body>
 </html>
-
- <cfif structKeyExists(form,'Submit')>
-<cfset struct_name = StructNew()> 
-<cfset s = StructInsert(struct_name, "#form.key_name#", "#form.value_name#")>  
-
-<cfset myArray = arrayNew(1)>
-  <cfset arrayAppend(myArray, struct_name)>
-  
-  <cfset key=form.key_name>
-  <cfset value=form.value_name>
- <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
-                        sessionManagement = "Yes">    
-<cfif NOT StructKeyExists(Session, "mystruct")>
-    <cflock timeout=20 scope="Session" type="Exclusive">
-      <cfset Session.mystruct = structNew()>
-    </cflock>
-</cfif>
-
-<cfif StructKeyExists(Session, "mystruct")>
-  <cfif IsDefined("key") AND  IsDefined("value") >
-
-  <cfset Session.mystruct["#key#"] = #value#>
-    <!---<cfif NOT StructKeyExists(Session.mystruct,"#key#")>
-    <cfset Session.mystruct["#key#"] = #value#>
-    
-      
-    </cfif>--->
-  </cfif>
-</cfif>
-
-<cfdump var="#Session.mystruct#">	
-</cfif>

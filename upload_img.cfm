@@ -43,8 +43,7 @@ File larger than 1MB.Upload image size lesse than 1MB
 
 <cfset newImageName =fileupload.serverdirectory & "\" & fileupload.serverFileName & "_thumbnail." &fileUpload.serverFileExt>
 
-<cfimage source="#myImage#" action="write"
-destination="#newImageName#" overwrite="yes">
+<cfimage source="#myImage#" action="write" destination="#newImageName#" overwrite="yes">
 
 <cfoutput>
 

@@ -33,8 +33,7 @@
                         <cfset value=form.value>
                         <cfset data=createObject("component","components.res")>
                         <cfset struct_data=data.structFunc(key,value)>
-                        <cfdump var="#struct_data#">
-                       
+                        <cfdump var="#struct_data#">                       
                     </cfif>
                 </div>
             </form>            

@@ -1,70 +1,56 @@
 <html>
-
 <head>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<title>User Table</title>
-
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-
-
-<body>
-<div class='container pt-5'>
-
-<cfform method='post' action="">
-  <div class="form-group row">
-    <label for="exampleInputEmail1" class="form-label col-sm-3" >Enter Numeric Value</label>
-   <div class='col-sm-9'>
-    <cfinput type="text" class="form-control" name="num" placeholder="Number less than 10" validate="integer" range = "1,10" message="Number should be less than 10" required="yes">
-   
-  </div></div>
- <div class='form-group row pt-3'>
- <div class='col-sm-4'></div>
- <div class='col-sm-4'>
-  <cfinput type="submit" name="Submit"  value="Submit" class="btn btn-primary">
-  </div>
-  <div class='col-sm-4'></div>
-  </div>
-</cfform>
-</div>
-
-
-<cfif structKeyExists(form, "Submit")>
-
-<cfquery name="user_data" datasource="user_inf">
- SELECT *
-         FROM user_data
-</cfquery>
-<cfset num=#form.num# >
-
-<div class='container py-5'>
-<table class='table table-bordered'>
-
-
-<tr>
-<th>First Name</th>
-<th>Last Name</th>
-</tr>
-<cfoutput query="user_data">
-<tr><td>
-#first_name#</td>
-<td>
-#last_name#</td></tr>
-</cfoutput>
-</table>
-
-<cfset data = QueryGetRow(user_data, num) >
-<cfdump var=#data#>
-</div>
-</div>
-</cfif>
-</body>
-
+ <body class='bg-success'>
+        <div class='container py-5' > 
+             <form name="nform" method="post" action="" class='col-lg-6 offset-lg-3 bg-white p-5'>
+                <h1 class='text-center pb-3'>Number Form</h1>
+                <div class="form-group row">
+                    <label class="form-label col-sm-4" >Enter Number Less than 10</label>
+                    <div class='col-sm-8'>
+                        <input type = "number" class='form-control' name = "num" min="1" max="10" placeholder="Enter Number Less than 10" required = "Yes">
+                    </div>
+                </div>                
+                <div class='form-group row pt-3'>
+                    <div class='col-sm-12 text-center'>
+                        <input type="Submit" name="Submit" value="Submit" class='btn btn-secondary'>
+                    </div>
+                </div>
+               <cfif structKeyExists(form, "Submit")>
+               <cfset num=form.num>                        
+                <cfset data=createObject("component","components.res")>                        
+                <cfset query_data=data.queryFunc()>                                     
+                <div>
+                  <table class="table table-bordered">
+                  <h3 class="text-success">Data:  <h3>
+                    <thead>
+                      <tr>
+                          <th>First Name</th>
+                          <th>Last Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <cfoutput query="query_data">
+                          <tr>
+                              <td>#first_name#</td>
+                              <td>#last_name#</td>
+                          </tr>
+                        </cfoutput>  
+                      </tbody>
+                    </table>
+                    <h3> Data from row <cfoutput>#num#</cfoutput> is: </h3>
+                    <cfset qdata = QueryGetRow(query_data, num) >
+                    <cfdump var=#qdata#>
+                  </div> 
+                </cfif> 
+              </form>             
+            </div>
+        
+    </body>
 </html>
-
-
-
-
-
 
