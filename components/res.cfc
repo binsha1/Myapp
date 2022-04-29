@@ -2,15 +2,15 @@
     <cffunction  name="numStatus" access="remote">
         <cfargument  name="Number">
         <cfset status="">
-        <cfif #Number# EQ 1>
+        <cfif Number EQ 1>
             <cfset status="OK">
-        <cfelseif #Number# EQ 2>
+        <cfelseif Number EQ 2>
             <cfset status="OK">
-        <cfelseif #Number# EQ 3>
+        <cfelseif Number EQ 3>
             <cfset status="Fair">
-        <cfelseif #Number# EQ 4>
+        <cfelseif Number EQ 4>
             <cfset status="Good">
-        <cfelseif #Number# EQ 5>
+        <cfelseif Number EQ 5>
             <cfset status="Very Good">
         <cfelse>
             <cfset status="Error">
@@ -181,8 +181,70 @@
         <cfreturn count_var>
     </cffunction>
 
-    <cffunction  name="uploadImg">
-
+    <cffunction  name="loopFunc">
+        <cfset l =3>
+        <cfloop from="1" to="3" index="i">        
+            <cfloop from="1" to="3" index="j" >
+                <cfoutput>#i# &nbsp;</cfoutput>
+                <cfset  i= (i + l)>
+            </cfloop>                   
+            <cfoutput> <br></cfoutput>    
+        </cfloop>
     </cffunction>
+
+    <cffunction  name="evenOdd" access="remote">
+        <cfargument  name="num_value">        
+        <cfset numArray=arrayNew(1)>
+        <cfset session.nArray=numArray>
+        <cfif isNumeric(num_value)>
+            <cfloop from ="1" to =#num_value# index="i">
+                <cfset arrayAppend(session.nArray, i)>
+            </cfloop>
+        </cfif>      
+        <cflocation  url="../cf_task17.cfm">
+    </cffunction>
+    
+    <cffunction  name="cookieFunc" access="remote">
+        <cfif IsDefined("cookie.VisitsCounter") eq "NO">
+            <cfcookie name="VisitsCounter" value="0">
+        </cfif>
+
+        <cfif IsDefined("cookie.VisitsCounter") eq "YES">
+            <cfset c_value=cookie.VisitsCounter>
+            <cfset c_count=c_value+1>
+            <cfcookie name="VisitsCounter" value="#c_count#">
+        </cfif>
+        <cfset session.c_name=cookie.VisitsCounter>
+        <cflocation  url="../cf_task19.cfm">        
+    </cffunction>
+
+    <cffunction name="capString" returnType="string" output="false">
+        <cfset var chars = "23456789ABCDEFGHJKMNPQRS*@/abcdefghijklmnopqrst()">
+        <cfset var length = randRange(4,7)>
+        <cfset var result = "">
+        <cfset var i = "">
+        <cfset var char = "">
+        
+        <cfscript>
+        for(i=1; i <= length; i++) {
+            char = mid(chars, randRange(1, len(chars)),1);
+            result&=char;
+        }
+        </cfscript>		
+        <cfreturn result>
+    </cffunction>
+
+    <cffunction name="capFunc" access="remote">
+        <cfargument  name="captchaText">
+        <cfargument  name="cHash">
+        <cfif hash(captchaText) neq cHash>
+            <cfset session.cap="false">
+        <cfelse>
+            <cfset session.cap="true">
+        </cfif>
+        <cflocation  url="../cf_task20.cfm">
+    </cffunction>
+
+
 
 </cfcomponent>
