@@ -1,4 +1,4 @@
-<cfcomponent>
+<cfcomponent accessors="TRUE">
     <cffunction  name="numStatus" access="remote">
         <cfargument  name="Number">
         <cfset status="">
@@ -134,7 +134,7 @@
             </cflock>
         </cfif>
         <cfset yes_no= StructKeyExists(Session.mystruct,"#key_name#")>    
-       <cfif StructKeyExists(Session, "mystruct")>        
+        <cfif StructKeyExists(Session, "mystruct")>        
             <cfif IsDefined("key_name") AND  IsDefined("value_name") >           
                 <cfif NOT StructKeyExists(Session.mystruct,"#key_name#")>
                     <cfset Session.mystruct["#key_name#"] = #value_name#> 
@@ -237,14 +237,140 @@
     <cffunction name="capFunc" access="remote">
         <cfargument  name="captchaText">
         <cfargument  name="cHash">
+        <cfargument  name="mail_add">
         <cfif hash(captchaText) neq cHash>
             <cfset session.cap="false">
         <cfelse>
             <cfset session.cap="true">
         </cfif>
-        <cflocation  url="../cf_task20.cfm">
+        <cflocation  url="../cf_task20.cfm?mail_add=#mail_add#">
     </cffunction>
 
+    <cffunction name="birthWishes" access="remote">
+    <cfset thisDir = expandPath("../uploads")>
+    <cfif len(trim(form.img_file)) >
+            <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
+            nameconflict="overwrite">
+            <cfset file_name=#fileupload.serverfile# >         
+            <cfset fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
+            <cfmail to="#form.baby_mail#" from="binshasr3@gmail.com" subject="Happy Birthday" > 
+            <cfmailparam file="#fileLoc#" disposition="inline"  contentID="image1">
+                    <img src="cid:image1">Happy Birthday  #form.baby_name# !
+            </cfmail>
+            <cfset session.birthday="true">            
+              <cfelse>
+                <cfset fileLoc="">                
+                <cfset session.birthday="false">            
+    </cfif>    
+    <cflocation  url="../cf_task21.cfm">
+    </cffunction>
+    
+    <cffunction name="jsonFunc" access="public">
+        <cfset jData = [{"Name":"saravanan","Age":27,"LOCATION":"dubai"},{"Name":"Ram","Age":26,"LOCATION":"Kovilpatti"}]>
+        <cfset tData = serializeJSON(jData)> 
+        <cfset dData = deserializeJSON(tData)>
+        <cfreturn dData> 
+    </cffunction>
+
+    <cffunction  name="wordFunc" access="remote" output="false">
+            <cfargument  name="description">
+            <cfset wordData=createObject("component", "tagCloud")>
+            <cfset structData=wordData.init(#arguments.description#)>
+            <cfset skeys=structKeyList(structData)>
+            <cftry>
+                <cfloop list="#skeys#" index="i"> 
+                    <cfquery name="word" datasource="word_data">
+                        INSERT INTO word_data.word_count(word_name) VALUES(<cfqueryparam value="#i#" cfsqltype="CF_SQL_VARCHAR"> )
+                    </cfquery>
+                </cfloop>
+            <cfcatch type="database">
+            </cfcatch>
+            </cftry>
+            <cflocation url="../count.cfm?desc='#arguments.description#">
+    </cffunction>
+
+    <cffunction  name="loginFunc" access="remote">
+            <cfargument  name="user_name">
+            <cfargument  name="pwd">
+            <cfset authenticate_user=createObject("component","authenticateUser")>
+            <cfset errorMessage=authenticate_user.validateUser(user_name,pwd)>
+            <cfif arrayIsEmpty(errorMessage)>
+                    <cfset userLogin=authenticate_user.doLogin(user_name,pwd)>
+                    <cfif userLogin EQ true>                        
+                        <cflocation url="../welcome.cfm">
+                    <cfelse>
+                        <cflocation  url="../cf_task27.cfm?invalid=true">>
+                    </cfif>
+            </cfif>        
+    </cffunction>
+
+    <cffunction name="loginFunc2" access="remote" >
+            <cfargument  name="user_name">
+            <cfargument  name="pwd">
+            <cfset userRoles=createObject("component","loginRoles")>
+            <cfset isLogin=userRoles.doLogin(user_name,pwd)> 
+            <cfoutput>#isLogin#
+            </cfoutput>
+            <cfif isLogin EQ true>
+                <cfif isUserInRole('admin') OR isUserInRole('editor')>
+                    <cflocation url="../page_list.cfm">
+                <cfelse>
+                    <cflocation url="../page_menu.cfm">
+                </cfif>
+            <cfelse>
+                <cflocation  url="../cf_task28?invalid=true"> 
+            </cfif>          
+    </cffunction>
+
+    <cffunction  name="updatePage" access="remote">
+        <cfargument  name="pagename">
+        <cfargument  name="pagedesc">
+        <cfargument  name="id">
+        <cfquery  name="update_data" datasource="cms_data">
+             UPDATE cms_data.page SET pagename=<cfqueryparam value="#arguments.pagename#" cfsqltype="CF_SQL_VARCHAR"> , pagedesc=<cfqueryparam value="#arguments.pagedesc#" cfsqltype="CF_SQL_VARCHAR"> WHERE pageid=<cfqueryparam value="#arguments.id#" cfsqltype="CF_SQL_INTEGER"> 
+        </cfquery>        
+        <cflocation url="../page_list.cfm?update=1">
+    </cffunction>
+
+    <cffunction name="wordCount" access="remote" output="false">
+
+    </cffunction>
+        <!---
+    <cffunction  name="subFunc" access="public">
+            <cfargument  name="first_name">
+            <cfargument  name="email_id">
+            <cfquery name="validate_email" datasource="validate_email"  >
+            INSERT INTO validate_email.validate_data(first_name,email_id) VALUES(<cfqueryparam  value="#arguments.first_name#" cfsqltype="CF_SQL_VARCHAR">,
+            <cfqueryparam  value="#arguments.email_id#" cfsqltype="CF_SQL_VARCHAR">)
+            </cfquery>
+        
+    </cffunction>--->
+ <!---
+    <cffunction  name="empFunc" access="remote">
+       <cfset thisDir = expandPath("../uploads")>
+       
+         <cfargument  name="position" required="true" type="string"><cfoutput>sdg
+       </cfoutput>
+       <cfargument  name="relocate">
+        <cfargument  name="dollar">
+        <cfargument  name="cents">
+        <cfargument  name="doc_file">
+        <cfargument  name="cdate">
+        <cfargument  name="p_url">
+        <cfargument  name="f_name">
+        <cfargument  name="l_name">
+        <cfargument  name="email">
+        <cfargument  name="phone">
+        <cfset salary=#arguments.dollar# & '.' & #arguments.cents#>
+        <cfif len(trim(#arguments.doc_file#))>
+                <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload" nameconflict="overwrite">
+                <cfset file_name=fileupload.serverfile >
+        <cfelse>
+                <cfset file_name="" >
+        </cfif>
+                
+       
+    </cffunction>--->
 
 
 </cfcomponent>

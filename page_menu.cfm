@@ -11,8 +11,7 @@
 </style>
 </head>
 
-<cfapplication name="sessionUser" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)#
-                        sessionManagement = "Yes">  
+
 
             
 <cfif structKeyExists(session, 'sessionUser')>

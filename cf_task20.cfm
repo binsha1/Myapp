@@ -1,6 +1,3 @@
-
-
-
 <html>
 <head>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -9,25 +6,26 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <title>Captcha Form</title>
 </head>
-
 <body class='bg-success'>
         <div class='container py-5'> 
             <div class="col-lg-6 offset-lg-3 bg-white p-5">
                   <h3 class='text-center pb-3'>Captcha and Email Validation </h3>
                   <form method='post' action="components/res.cfc?method=capFunc" enctype="multipart/form-data" name="img_form">
-                    <cfif structKeyExists(session,"cap")> 
-
+                    <cfif structKeyExists(session,"cap")>
+                              <cfparam  name="mail_add" default="v">
                               <cfif session.cap EQ "false">
                                   <div class="alert alert-danger alert-dismissible ">
                                       <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                       Text mismatch! Please reenter.
                                   </div>
                               <cfelse>
+                                  <cfif mail_add NEQ "v">
                                   <div class="alert alert-success alert-dismissible ">
                                       <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                                    <cfoutput> #form.mail_add# successfully subscribe our newsletter.</cfoutput>
-                                  </div>
-
+                                      
+                                                    <cfoutput> #mail_add# successfully subscribe our newsletter.</cfoutput>
+                                    </div>
+                                  </cfif>
                               </cfif>                               
                           </cfif> 
                       <cfset data=createObject("component","components.res")>
