@@ -5,8 +5,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Page List</title>
 </head>            
-        <cfif structKeyExists(session, 'sessionUser')>
-        
+        <cfif structKeyExists(session, 'sessionUser')>        
             <cfquery name='page_data' datasource='cms_data'>
                 SELECT * FROM cms_data.page
             </cfquery>
@@ -24,7 +23,17 @@
                         <div class="alert alert-success alert-dismissible ">
                                       <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                                       Updated Successfully
-                                  </div>                    
+                        </div>
+                    <cfelseif structKeyExists(URL, 'add')>
+                            <div class="alert alert-success alert-dismissible ">
+                                      <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                      Page Added Successfully
+                        </div>
+                    <cfelseif structKeyExists(URL, 'delete')>
+                            <div class="alert alert-success alert-dismissible ">
+                                      <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                                      Page Deleted Successfully
+                        </div>                     
                     </cfif> 
                         <h3 class='text-center py-5'>Page Details</h3>
                         <a href='add.cfm' class='btn btn-success text-right mb-3'>+ Add New Page</a>
@@ -43,7 +52,7 @@
                                 <td>#pagename#</td>
                                 <td>#pagedesc#</td>
                                 <td><a href='edit.cfm?id=#pageid#'class='btn btn-warning'>Edit</a></td>
-                                <td><a href='delete.cfm?id=#pageid#'class='btn btn-danger'>Delete</a></td>
+                                <td><a href="delete.cfm?id=#pageid#"class='btn btn-danger'>Delete</a></td>
                             </tr>
                             </cfoutput>
                         </tbody>

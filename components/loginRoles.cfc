@@ -50,12 +50,15 @@
                 <cfreturn recordFound>
         </cffunction>
         <!---- Delete Page Function---->
-        <cffunction  name="delPage" access="remote" returnType="boolean" >
+        <cffunction  name="delPage" access="remote" returnType="boolean">
                 <cfargument  name="page_id" type="integer" >
+                <cfoutput>#page_id#
+                </cfoutput>
                 <cfquery name="page_data" datasource="cms_data"> 
-                        DELETE FROM cms_data.page WHERE pageid="<cfqueryparam value="#arguments.page_id#" cfsqltype="CF_SQL_INTEGER">" 
+                        DELETE FROM cms_data.page WHERE pageid=<cfqueryparam value="#arguments.page_id#" cfsqltype="CF_SQL_INTEGER"> 
                 </cfquery>                
-                <cfset recordDelete=true>        
-                <cfreturn recordDelete>
+                <cfset recordDelete=true>
+                <cfreturn recordDelete>        
+                
         </cffunction>
 </cfcomponent>

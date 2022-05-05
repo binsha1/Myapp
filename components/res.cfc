@@ -289,6 +289,32 @@
             <cflocation url="../count.cfm?desc='#arguments.description#">
     </cffunction>
 
+    <cffunction name="wordFunc2" access="remote">
+        <cfset thisDir = expandPath("../uploads")>
+        
+        <cfif len(trim(form.doc_file)) >
+                <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload"
+                nameconflict="overwrite">
+                <cfset file_name=#fileupload.serverfile# >            
+                <cfset fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >       
+            
+                <cffile action="read" file="#fileLoc#" variable="Contents">
+                <cfset wordData=createObject("component", "tagCloud")>
+                <cfset structData=wordData.init(Contents)>
+                <cfset skeys=structKeyList(structData)>
+                <cftry>
+                <cfloop list="#skeys#" index="i">              
+                    <cfquery name="word" datasource="read_data">
+                        INSERT INTO read_data.read_count(word_name) VALUES(<cfqueryparam value="#i#" cfsqltype="CF_SQL_VARCHAR"> )
+                    </cfquery>
+                </cfloop>
+                <cfcatch type="database">                
+                </cfcatch>
+                </cftry>              
+                <cflocation url="../countf.cfm?desc='#Contents#">       
+        </cfif>
+    </cffunction>
+
     <cffunction  name="loginFunc" access="remote">
             <cfargument  name="user_name">
             <cfargument  name="pwd">
@@ -332,9 +358,25 @@
         <cflocation url="../page_list.cfm?update=1">
     </cffunction>
 
-    <cffunction name="wordCount" access="remote" output="false">
-
+    <cffunction  name="addPage" access="remote">
+            <cfargument  name="page_name">
+            <cfargument  name="description">
+            <cfquery name="page_data" datasource="cms_data"> 
+                        INSERT INTO cms_data.page(pagename,pagedesc) VALUES (<cfqueryparam value="#arguments.page_name#" cfsqltype="CF_SQL_VARCHAR">, <cfqueryparam value="#arguments.description#" cfsqltype="CF_SQL_VARCHAR">) 
+                </cfquery>
+            <cflocation  url="../page_list.cfm?add=1">                       
     </cffunction>
+
+    <cffunction  name="upQuery">
+            <cfargument  name="id">
+            <cfquery name="update_data" datasource="cms_data"> 
+                  SELECT * FROM cms_data.page
+                  WHERE pageid = <cfqueryparam value="#arguments.id#" cfsqltype="CF_SQL_INTEGER">
+              </cfquery>
+              <cfreturn update_data>
+    </cffunction>
+
+    
         <!---
     <cffunction  name="subFunc" access="public">
             <cfargument  name="first_name">
@@ -344,33 +386,55 @@
             <cfqueryparam  value="#arguments.email_id#" cfsqltype="CF_SQL_VARCHAR">)
             </cfquery>
         
-    </cffunction>--->
- <!---
-    <cffunction  name="empFunc" access="remote">
-       <cfset thisDir = expandPath("../uploads")>
-       
-         <cfargument  name="position" required="true" type="string"><cfoutput>sdg
-       </cfoutput>
-       <cfargument  name="relocate">
-        <cfargument  name="dollar">
-        <cfargument  name="cents">
-        <cfargument  name="doc_file">
-        <cfargument  name="cdate">
-        <cfargument  name="p_url">
-        <cfargument  name="f_name">
-        <cfargument  name="l_name">
-        <cfargument  name="email">
-        <cfargument  name="phone">
-        <cfset salary=#arguments.dollar# & '.' & #arguments.cents#>
-        <cfif len(trim(#arguments.doc_file#))>
-                <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload" nameconflict="overwrite">
-                <cfset file_name=fileupload.serverfile >
-        <cfelse>
-                <cfset file_name="" >
+    </cffunction>
+ 
+    --->
+
+    <cffunction name="uploadImg" access="remote">
+        
+        <cfargument  name="img_name">
+        <cfargument  name="description">
+        <cfset thisDir = expandPath("../uploads")>        
+        <cfif structKeyExists(form,"img_file")>
+        <!--- Use the cffile tag to upload the image file. --->
+                <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
+                nameconflict="overwrite">
+                <cfquery name="img_data" datasource="img_data"> 
+                INSERT INTO img_data.img_table(img_name,description,file_name)
+                VALUES (<cfqueryparam value="#arguments.img_name#" cfsqltype="CF_SQL_VARCHAR">, <cfqueryparam value="#arguments.description#" cfsqltype="CF_SQL_VARCHAR">, "#fileupload.serverfile#") 
+                </cfquery>
+                <cfif fileUpload.fileWasSaved>
+                    <cfset path=fileupload.serverdirectory & "\" & fileupload.serverfile>
+                <cfif not IsImageFile(path)>
+                    <cfset errors = "Invalid Image!<br />"> <!--- clean up ---> 
+                    <cffile action="delete" file="#path#">
+                <cfelseif fileupload.filesize gt 1000000>
+                        <cfset session.fsize="gt">
+                <cfelse>
+                        <cfimage action="read" source="#path#" name="myImage">
+                        <cfset ImageScaleToFit(myImage,20,20,"bilinear")>
+                        <cfset newImageName =fileupload.serverdirectory & "\" & fileupload.serverFileName & "_thumbnail." &fileUpload.serverFileExt>
+                        <cfimage source="#myImage#" action="write" destination="#newImageName#" overwrite="yes">
+                        
+                        <cfset session.thumbail=newImageName>
+                        <cfset session.directory=fileupload.serverdirectory>
+                        <cflocation url="../upload_img.cfm?upload=1">
+                        
+                   <!---<cfoutput>
+
+                        <div class='d-flex flex-column justify-content-center align-items-center'>
+                        <p class=' text-success font-weight-bold'>
+                        File Uploaded and thumbnail created!!
+                        <p>
+                        <cfimage source="#newImageName#" action="writeToBrowser">
+                        </div>
+                        </cfoutput>--->
+
+                </cfif>
+            </cfif>
         </cfif>
-                
-       
-    </cffunction>--->
+
+    </cffunction>
 
 
 </cfcomponent>

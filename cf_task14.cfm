@@ -8,7 +8,7 @@
 <body>
 <div class='container py-5 cform_div'>
     <h3 class='text-center'>Upload Image </h3>
-    <form method='post' action="upload_img.cfm" enctype="multipart/form-data" name="img_form">
+    <form method='post' action="components/res.cfc?method=uploadImg" enctype="multipart/form-data" name="img_form">
         <div class="form-group row">
             <label for="exampleInputEmail1" class="form-label col-sm-3" >Image Name</label>
             <div class='col-sm-9'>

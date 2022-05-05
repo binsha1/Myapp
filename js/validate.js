@@ -1,3 +1,33 @@
+$(document).ready(function(){
+    $("body").on('change', '#email_sub', function() {
+        var email=$(this).val();
+        alert('fdg');
+        $.ajax({   
+                url: "./components/dbData.cfc",
+                type: 'get',
+                dataType:"json",
+                data:{
+                  method:"getEmailData",
+                  u_email:email
+                  
+                },
+                success:function(data)
+                {
+                  
+                  if(data==0)
+                  {
+                    $('#submit_sub').prop('disabled', false);
+                  }
+                  else{
+                    alert('Email Already Exists');
+                  }
+                }         
+                
+           });
+       });
+    });
+
+
 function validateInput()
 {
     var v=document.getElementById('num').value;
@@ -92,33 +122,6 @@ function validateFields()
         alert("Phone length should be equal to 10");
          event.preventDefault();
         return false;
-    }     
+    }
+    return true;     
 }
-$(document).ready(function(){
-$("body").on('change', '#email_sub', function() {
-    var email=$(this).val();
-    
-    $.ajax({   
-            url: "../components/dbData.cfc",
-            type: 'get',
-            dataType:"json",
-            data:{
-              method:"getEmailData",
-              u_email:email
-              
-            },
-            success:function(data)
-            {
-              alert('fdg');
-              if(data==0)
-              {
-                $('#submit_sub').prop('disabled', false);
-              }
-              else{
-                alert('Email Already Exists');
-              }
-            }         
-            
-       });
-   });
-});

@@ -22,30 +22,7 @@
                   Invalid Credentials
                 </div>
         </cfif>   
-        <!---
-        <cfif structKeyExists(form, "Submit")>
-        <cfset userRoles=createObject("component","components.loginRoles")>
-          <cfset isLogin=userRoles.doLogin(form.user_name,form.pwd)> 
-            <cfif isLogin EQ true>
-            <cfif isUserInRole('admin') OR isUserInRole('editor')>
-            <cflocation url="page_list.cfm">
-            <cfelse>
-            <cflocation url="page_menu.cfm">
-            </cfif>
-
-            <cfelse>
-            <cfoutput>
-            <div class="alert alert-danger col-lg-6 offset-lg-3" role="alert">
-                Invalid Credentials
-                </div>
-            </cfoutput>    
-
-
-
-        </cfif>
-
-
-        </cfif>--->
+        
         <form method='post' name="img_form" action="components/res.cfc?method=loginFunc2" class='col-lg-6 offset-lg-3 bg-white p-5'>
               <div class="form-group row">
                     <label for="exampleInputEmail1" class="form-label col-sm-3" >User Name</label>
