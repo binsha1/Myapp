@@ -377,18 +377,19 @@
     </cffunction>
 
     
-        <!---
-    <cffunction  name="subFunc" access="public">
+        
+    <cffunction  name="subFunc" access="remote">
             <cfargument  name="first_name">
             <cfargument  name="email_id">
             <cfquery name="validate_email" datasource="validate_email"  >
-            INSERT INTO validate_email.validate_data(first_name,email_id) VALUES(<cfqueryparam  value="#arguments.first_name#" cfsqltype="CF_SQL_VARCHAR">,
-            <cfqueryparam  value="#arguments.email_id#" cfsqltype="CF_SQL_VARCHAR">)
+                INSERT INTO validate_email.validate_data(first_name,email_id) VALUES(<cfqueryparam  value="#arguments.first_name#" cfsqltype="CF_SQL_VARCHAR">,
+                <cfqueryparam  value="#arguments.email_id#" cfsqltype="CF_SQL_VARCHAR">)
             </cfquery>
+            <cflocation  url="../cf_task24.cfm?save=1">
         
     </cffunction>
  
-    --->
+   
 
     <cffunction name="uploadImg" access="remote">
         
@@ -434,6 +435,43 @@
             </cfif>
         </cfif>
 
+    </cffunction>
+
+    <cffunction name="display" access="remote"> 
+        <cfargument name="Position" required="true">
+        <cfargument name="Relocate" required="true">
+        <cfargument name="join_date" required="true">
+        <cfargument name="wurl" required="true">
+        <cfargument name="Name" required="true">
+        <cfargument name="Lname" required="true">
+        <cfargument name="EMail" required="true">
+        <cfargument name="Phone" required="true">
+
+        <cfset thisDir = expandPath("../uploads")>
+         <cfif len(trim(form.doc_file)) >            
+            <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload"
+            nameconflict="overwrite">
+            <cfset file_name=#fileupload.serverfile# >         
+            <cfset fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
+            <cfset imageValue = #file_name#>
+            <cfset salary=#arguments.dollar# & '.' & #arguments.cents#>
+            <cfquery name="insert" datasource="newtech" result="res">    
+                INSERT INTO sakila.emp_details(position,relocate,join_date,website,resume,salary,first_name,last_name,email,phone)
+                    VALUES(
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.Position#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.Relocate#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.join_date#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.wurl#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#imageValue#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#salary#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.Name#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.Lname#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.EMail#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.Phone#">            
+                    )
+        </cfquery>
+        </cfif>            
+       <cflocation  url="../cf_task23.cfm?Message=1">           
     </cffunction>
 
 
