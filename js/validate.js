@@ -1,31 +1,30 @@
-$(document).ready(function(){
+function validateEmail(){
     $("body").on('change', '#email_sub', function() {
-        var email=$(this).val();
-        alert('fdg');
+        var email=$(this).val();        
         $.ajax({   
                 url: "./components/dbData.cfc",
                 type: 'get',
                 dataType:"json",
                 data:{
-                  method:"getEmailData",
+                method:"getEmailData",
                   u_email:email
                   
                 },
+                cache:false,
                 success:function(data)
                 {
                   
-                  if(data==0)
-                  {
-                    $('#submit_sub').prop('disabled', false);
-                  }
-                  else{
-                    alert('Email Already Exists');
-                  }
+                    if(data==0)
+                    {
+                        $('#submit_sub').prop('disabled', false);
+                    }
+                    else{
+                        alert('Email Already Exists');
+                    }
                 }         
-                
-           });
+            });
        });
-    });
+    }
 
 
 function validateInput()

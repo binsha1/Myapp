@@ -1,11 +1,16 @@
-<cffunction  name="multiply">
-    <cfset arg_count=arrayLen(Arguments)>
-    <cfset mul=1>
-    <cfloop index="i" from="1" to="#arg_count#" >
-        <cfset mul=mul*Arguments[i]>
-    </cfloop>
-    <cfreturn mul>
-</cffunction>
+<cfscript> 
+        function multiply()
+            { 
+                var arg_count = ArrayLen(Arguments); 
+                var mul =1; 
+                var i = 0; 
+                for( i = 1 ; i LTE arg_count; i = i + 1 ) 
+                { 
+                    mul = mul* Arguments[i]; 
+                } 
+                return mul;
+            } 
+</cfscript>
 
 <cfset res1=multiply(1,2)>
 <cfset res2=multiply(1,2,3)>
