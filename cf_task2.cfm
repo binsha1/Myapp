@@ -23,9 +23,8 @@
                         Invalid Number
                     </div>
                 </cfif>
-            </cfif>
-           
-            <form name="nform" method="post" action="components/res.cfc?method=numStatus" class='col-lg-6 offset-lg-3 bg-white p-5'>
+            </cfif>           
+            <form name="nform" method="post" action="components/res.cfc?method=numStatus2" class='col-lg-6 offset-lg-3 bg-white p-5'>
                 <h1 class='text-center pb-3'>Input Form</h1>
                 <div class="form-group row">
                     <label class="form-label col-sm-4" >Enter Number</label>

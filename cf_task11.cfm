@@ -1,17 +1,16 @@
 <cfscript> 
-        function multiply()
+    function multiply()
+        { 
+            var arg_count = ArrayLen(Arguments); 
+            var mul =1; 
+            var i = 0; 
+            for( i = 1 ; i LTE arg_count; i = i + 1 ) 
             { 
-                var arg_count = ArrayLen(Arguments); 
-                var mul =1; 
-                var i = 0; 
-                for( i = 1 ; i LTE arg_count; i = i + 1 ) 
-                { 
-                    mul = mul* Arguments[i]; 
-                } 
-                return mul;
+                mul = mul* Arguments[i]; 
             } 
+            return mul;
+        } 
 </cfscript>
-
 <cfset res1=multiply(1,2)>
 <cfset res2=multiply(1,2,3)>
 <cfset res3=multiply(1,2,3,4)>

@@ -31,8 +31,7 @@
                     <cfif structKeyExists(form, "Submit")>
                         <cfset key=form.key_name>
                         <cfset value=form.value_name>
-                        <cfset data=createObject("component","components.res")>
-                        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">
+                        <cfset data=createObject("component","components.res")>                        
                         <cfset struct_array=data.structFunc5(key,value)>
                         <div class="pl-5">
                             <cfdump var="#struct_array#">     

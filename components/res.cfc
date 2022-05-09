@@ -1,40 +1,40 @@
 <cfcomponent accessors="TRUE">
     <cffunction  name="numStatus" access="remote">
-        <cfargument  name="Number">
-        <cfset status="">
+        <cfargument  name="Number" type="integer">
+        <cfset local.status="">
         <cfif Number EQ 1>
-            <cfset status="OK">
+            <cfset local.status="OK">
         <cfelseif Number EQ 2>
-            <cfset status="OK">
+            <cfset local.status="OK">
         <cfelseif Number EQ 3>
-            <cfset status="Fair">
+            <cfset local.status="Fair">
         <cfelseif Number EQ 4>
-            <cfset status="Good">
+            <cfset local.status="Good">
         <cfelseif Number EQ 5>
-            <cfset status="Very Good">
+            <cfset local.status="Very Good">
         <cfelse>
-            <cfset status="Error">
+            <cfset local.status="Error">
         </cfif>
         <cflocation url="../cf_task1.cfm?status=#status#">
     </cffunction>
 
     <cffunction  name="numStatus2" access="remote">
-        <cfargument name="Number">
-        <cfset status="">
-        <cfswitch expression="#formNum#"> 
-            <cfcase value=1><cfset status="OK"></cfcase>
-            <cfcase value=2><cfset status="OK"></cfcase> 
-            <cfcase value=3><cfset status="Fair"></cfcase>
-            <cfcase value=4><cfset status="Good"></cfcase>
-            <cfcase value=5><cfset status="Very Good"></cfcase>
-            <cfdefaultcase><cfset status="Error"></cfdefaultcase> 
+        <cfargument name="Number" type="integer">
+        <cfset local.status="">
+        <cfswitch expression="#arguments.Number#"> 
+            <cfcase value=1><cfset local.status="OK"></cfcase>
+            <cfcase value=2><cfset local.status="OK"></cfcase> 
+            <cfcase value=3><cfset local.status="Fair"></cfcase>
+            <cfcase value=4><cfset local.status="Good"></cfcase>
+            <cfcase value=5><cfset local.status="Very Good"></cfcase>
+            <cfdefaultcase><cfset local.status="Error"></cfdefaultcase> 
         </cfswitch>        
         <cflocation url="../cf_task2.cfm?status=#status#">
     </cffunction>
 
-    <cffunction  name="divide" access="remote" returntype="array">
-            <cfargument name="Number">
-            <cfset numArray=arrayNew(1)>
+    <cffunction  name="divide" access="remote" returntype="array" output="true">
+            <cfargument name="Number" type="string">
+            <cfset local.numArray=arrayNew(1)>
             <cfloop list="#Number#" index="i" >
                 <cfif i mod 3>            
                         <cfcontinue>
@@ -45,25 +45,25 @@
         <cfreturn numArray>           
     </cffunction>
 
-    <cffunction name="dateFunc" access="remote" returnType="array">
-        <cfargument  name="user_dob">
-        <cfargument  name="mom_dob">
-        <cfset current_year=DateFormat(Now(),"yyyy")>
-        <cfset user_year=DateFormat(user_dob,"yyyy")>
-        <cfset user_month=DateFormat(user_dob,"mm")>
-        <cfset user_day=DateFormat(user_dob,"dd")>
-        <cfset mom_year=DateFormat(mom_dob,"yyyy")>
-        <cfset mom_month=DateFormat(mom_dob,"mm")>
-        <cfset mom_day=DateFormat(mom_dob,"dd")>
+    <cffunction name="dateFunc" access="public" returnType="array" output="true">
+        <cfargument  name="user_dob" type="date">
+        <cfargument  name="mom_dob" type="date">
+        <cfset local.current_year=DateFormat(Now(),"yyyy")>
+        <cfset local.user_year=DateFormat(user_dob,"yyyy")>
+        <cfset local.user_month=DateFormat(user_dob,"mm")>
+        <cfset local.user_day=DateFormat(user_dob,"dd")>
+        <cfset local.mom_year=DateFormat(mom_dob,"yyyy")>
+        <cfset local.mom_month=DateFormat(mom_dob,"mm")>
+        <cfset local.mom_day=DateFormat(mom_dob,"dd")>
 
-        <cfset user_age=dateDiff("d", user_year, current_year)>
-        <cfset deliver_age=dateDiff("d", mom_year, user_year)>
-        <cfset arrayN=arrayNew(1)>
+        <cfset local.user_age=dateDiff("d", user_year, current_year)>
+        <cfset local.deliver_age=dateDiff("d", mom_year, user_year)>
+        <cfset local.arrayN=arrayNew(1)>
         
-        <cfset user_bdy=CreateDate(current_year,user_month,user_day)>
-        <cfset mom_bdy=CreateDate(current_year,mom_month,mom_day)>
-        <cfset user_count=dateDiff("d",  now(), user_bdy)>
-        <cfset mom_count=dateDiff("d",  now(), mom_bdy)>
+        <cfset local.user_bdy=CreateDate(current_year,user_month,user_day)>
+        <cfset local.mom_bdy=CreateDate(current_year,mom_month,mom_day)>
+        <cfset local.user_count=dateDiff("d",  now(), user_bdy)>
+        <cfset local.mom_count=dateDiff("d",  now(), mom_bdy)>
         <cfset arrayAppend(arrayN,user_age)>
         <cfset arrayAppend(arrayN,deliver_age)>
         <cfset arrayAppend(arrayN,user_count)>
@@ -71,21 +71,20 @@
         <cfreturn arrayN>
     </cffunction>
 
-    <cffunction  name="structFunc" access="remote">
-        <cfargument  name="key">
-        <cfargument  name="value">
-        <cfset struct_name=structNew()>
-        <cfset struct_name.Key=key>
-        <cfset struct_name.Value=value>
+    <cffunction  name="structFunc" access="public" output="true">
+        <cfargument  name="key" type="string">
+        <cfargument  name="value" type="string">
+        <cfset local.struct_name=structNew()>
+        <cfset local.struct_name.Key=key>
+        <cfset local.struct_name.Value=value>
         <cfreturn struct_name>
     </cffunction>
 
-    <cffunction  name="structFunc2" access="remote">
-        <cfargument  name="key_name">
-        <cfargument  name="value_name">       
-        <cfset struct_name=structNew()>
-        <cfset s = StructInsert(struct_name, "#key_name#", "#value_name#",1)>     
-        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">    
+    <cffunction  name="structFunc2" access="public" output="true">
+        <cfargument  name="key_name" type="string">
+        <cfargument  name="value_name" type="string">       
+        <cfset local.struct_name=structNew()>
+        <cfset local.s = StructInsert(struct_name, "#arguments.key_name#", "#arguments.value_name#",1)>  
         <cfif NOT StructKeyExists(Session, "mystruct")>
             <cflock timeout=20 scope="Session" type="Exclusive">
                 <cfset Session.mystruct = structNew()>
@@ -93,51 +92,47 @@
         </cfif>
         <cfif StructKeyExists(Session, "mystruct")>        
             <cfif IsDefined("key_name") AND  IsDefined("value_name") >           
-                <cfif NOT StructKeyExists(Session.mystruct,"#key_name#")>
-                    <cfset Session.mystruct["#key_name#"] = #value_name#> 
+                <cfif NOT StructKeyExists(Session.mystruct,"#arguments.key_name#")>
+                    <cfset Session.mystruct["#key_name#"] = #arguments.value_name#> 
                 </cfif>
             </cfif>
         </cfif>
-        <cfreturn #session.mystruct#>
+        <cfreturn session.mystruct>
     </cffunction>
 
-    <cffunction  name="structFunc3" access="remote">
-        <cfargument  name="key_name">
-        <cfargument  name="value_name">       
-        <cfset struct_name=structNew()>
-        <cfset s = StructInsert(struct_name, "#key_name#", "#value_name#",1)>     
-        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">    
+    <cffunction  name="structFunc3" access="public" output="true">
+        <cfargument  name="key_name" type="string">
+        <cfargument  name="value_name" type="string">       
+        <cfset local.struct_name=structNew()>
+        <cfset local.s = StructInsert(struct_name, "#arguments.key_name#", "#arguments.value_name#",1)>   
         <cfif NOT StructKeyExists(Session, "mystruct")>
             <cflock timeout=20 scope="Session" type="Exclusive">
                 <cfset Session.mystruct = structNew()>
             </cflock>
         </cfif>
         <cfif StructKeyExists(Session, "mystruct")>        
-            <cfif IsDefined("key_name") AND  IsDefined("value_name") >       
-                
-                    <cfset Session.mystruct["#key_name#"] = #value_name#> 
-                
+            <cfif IsDefined("key_name") AND  IsDefined("value_name") >      
+                <cfset Session.mystruct["#key_name#"] = #value_name#>
             </cfif>
         </cfif>
-        <cfreturn #session.mystruct#>
+        <cfreturn session.mystruct>
     </cffunction>
 
-    <cffunction  name="structFunc4" access="remote">
-        <cfargument  name="key_name">
-        <cfargument  name="value_name">       
-        <cfset struct_name=structNew()>
-        <cfset s = StructInsert(struct_name, "#key_name#", "#value_name#",1)>     
-        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">    
+    <cffunction  name="structFunc4" access="public" output="true">
+        <cfargument  name="key_name" type="string">
+        <cfargument  name="value_name" type="string">       
+        <cfset local.struct_name=structNew()>
+        <cfset local.s = StructInsert(struct_name, "#arguments.key_name#", "#arguments.value_name#",1)>     
         <cfif NOT StructKeyExists(Session, "mystruct")>
             <cflock timeout=20 scope="Session" type="Exclusive">
                 <cfset Session.mystruct = structNew()>
             </cflock>
         </cfif>
-        <cfset yes_no= StructKeyExists(Session.mystruct,"#key_name#")>    
+        <cfset local.yes_no= StructKeyExists(Session.mystruct,"#key_name#")>    
         <cfif StructKeyExists(Session, "mystruct")>        
             <cfif IsDefined("key_name") AND  IsDefined("value_name") >           
-                <cfif NOT StructKeyExists(Session.mystruct,"#key_name#")>
-                    <cfset Session.mystruct["#key_name#"] = #value_name#> 
+                <cfif NOT StructKeyExists(Session.mystruct,"#arguments.key_name#")>
+                    <cfset Session.mystruct["#key_name#"] = #arguments.value_name#> 
                 </cfif>
             </cfif>
         </cfif>
@@ -145,12 +140,11 @@
         <cfreturn yes_no>
     </cffunction>
 
-    <cffunction  name="structFunc5" access="remote">
-        <cfargument  name="key_name">
-        <cfargument  name="value_name">       
-        <cfset struct_name=structNew()>
-        <cfset s = StructInsert(struct_name, "#key_name#", "#value_name#",1)>     
-        <cfapplication name="structures" sessionTimeout = #CreateTimeSpan(0, 0, 0, 60)# sessionManagement = "Yes">    
+    <cffunction  name="structFunc5" access="public" output="true">
+        <cfargument  name="key_name" type="string">
+        <cfargument  name="value_name" type="string">       
+        <cfset local.struct_name=structNew()>
+        <cfset local.s = StructInsert(struct_name, "#arguments.key_name#", "#arguments.value_name#",1)>    
         <cfif NOT StructKeyExists(Session, "mystruct")>
             <cflock timeout=20 scope="Session" type="Exclusive">
                 <cfset Session.mystruct = structNew()>
@@ -161,28 +155,28 @@
                 <cfset Session.mystruct["#key_name#"] = #value_name#> 
             </cfif>
         </cfif>
-        <cfset structArray = structKeyArray(Session.mystruct)>
-        <cfset sortedKeys = structArray.sort("text","asc")>     
+        <cfset local.structArray = structKeyArray(Session.mystruct)>
+        <cfset local.sortedKeys = structArray.sort("text","asc")>     
 	    <cfdump var="#session.mystruct#">
-        <cfreturn #sortedKeys#>   
+        <cfreturn sortedKeys>   
     </cffunction>
 
-    <cffunction  name="queryFunc">
+    <cffunction  name="queryFunc" access="public" output="true">
         <cfquery name="user_data" datasource="user_inf">
                 SELECT * FROM user_data
         </cfquery>
-        <cfreturn #user_data#>
+        <cfreturn user_data>
     </cffunction>
 
-    <cffunction  name="textFunc">
-        <cfargument  name="textString">
-        <cfset sent="the quick brown fox jumps over the lazy dog">        
-        <cfset count_var=ListValueCount(sent,textString," ")>
+    <cffunction  name="textFunc" access="public" output="true">
+        <cfargument  name="textString" type="string">
+        <cfset local.sent="the quick brown fox jumps over the lazy dog">        
+        <cfset local.count_var=ListValueCount(sent,textString," ")>
         <cfreturn count_var>
     </cffunction>
 
     <cffunction  name="loopFunc">
-        <cfset l =3>
+        <cfset local.l =3>
         <cfloop from="1" to="3" index="i">        
             <cfloop from="1" to="3" index="j" >
                 <cfoutput>#i# &nbsp;</cfoutput>
@@ -193,8 +187,8 @@
     </cffunction>
 
     <cffunction  name="evenOdd" access="remote">
-        <cfargument  name="num_value">        
-        <cfset numArray=arrayNew(1)>
+        <cfargument  name="num_value" type="integer">        
+        <cfset local.numArray=arrayNew(1)>
         <cfset session.nArray=numArray>
         <cfif isNumeric(num_value)>
             <cfloop from ="1" to =#num_value# index="i">
@@ -208,7 +202,6 @@
         <cfif IsDefined("cookie.VisitsCounter") eq "NO">
             <cfcookie name="VisitsCounter" value="0">
         </cfif>
-
         <cfif IsDefined("cookie.VisitsCounter") eq "YES">
             <cfset c_value=cookie.VisitsCounter>
             <cfset c_count=c_value+1>
@@ -218,7 +211,7 @@
         <cflocation  url="../cf_task19.cfm">        
     </cffunction>
 
-    <cffunction name="capString" returnType="string" output="false">
+    <cffunction name="capString" access="public" returnType="string" output="false" >
         <cfset var chars = "23456789ABCDEFGHJKMNPQRS*@/abcdefghijklmnopqrst()">
         <cfset var length = randRange(4,7)>
         <cfset var result = "">
@@ -235,9 +228,9 @@
     </cffunction>
 
     <cffunction name="capFunc" access="remote">
-        <cfargument  name="captchaText">
-        <cfargument  name="cHash">
-        <cfargument  name="mail_add">
+        <cfargument  name="captchaText" type="string">
+        <cfargument  name="cHash" type="string">
+        <cfargument  name="mail_add" type="string">
         <cfif hash(captchaText) neq cHash>
             <cfset session.cap="false">
         <cfelse>
@@ -247,25 +240,26 @@
     </cffunction>
 
     <cffunction name="birthWishes" access="remote">
-    <cfset thisDir = expandPath("../uploads")>
-    <cfif len(trim(form.img_file)) >
-            <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
-            nameconflict="overwrite">
-            <cfset file_name=#fileupload.serverfile# >         
-            <cfset fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
-            <cfmail to="#form.baby_mail#" from="binshasr3@gmail.com" subject="Happy Birthday" > 
-            <cfmailparam file="#fileLoc#" disposition="inline"  contentID="image1">
-                    <img src="cid:image1">Happy Birthday  #form.baby_name# !
-            </cfmail>
-            <cfset session.birthday="true">            
-              <cfelse>
-                <cfset fileLoc="">                
-                <cfset session.birthday="false">            
-    </cfif>    
-    <cflocation  url="../cf_task21.cfm">
+        <cfargument  name="img_file" type="string">
+        <cfset local.thisDir = expandPath("../uploads")>        
+        <cfif len(trim(arguments.img_file)) >
+                <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
+                nameconflict="overwrite">
+                <cfset local.file_name=#fileupload.serverfile# >         
+                <cfset local.fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
+                <cfmail to="#form.baby_mail#" from="binshasr3@gmail.com" subject="Happy Birthday" > 
+                <cfmailparam file="#fileLoc#" disposition="inline"  contentID="image1">
+                        <img src="cid:image1">Happy Birthday  #form.baby_name# !
+                </cfmail>
+                <cfset session.birthday="true">            
+                <cfelse>
+                    <cfset local.fileLoc="">                
+                    <cfset session.birthday="false">            
+        </cfif>    
+        <cflocation  url="../cf_task21.cfm">
     </cffunction>
     
-    <cffunction name="jsonFunc" access="public">
+    <cffunction name="jsonFunc" access="public" output="true">
         <cfset jData = [{"Name":"saravanan","Age":27,"LOCATION":"dubai"},{"Name":"Ram","Age":26,"LOCATION":"Kovilpatti"}]>
         <cfset tData = serializeJSON(jData)> 
         <cfset dData = deserializeJSON(tData)>
@@ -391,20 +385,18 @@
  
    
 
-    <cffunction name="uploadImg" access="remote">
-        
-        <cfargument  name="img_name">
-        <cfargument  name="description">
-        <cfset thisDir = expandPath("../uploads")>        
-        <cfif structKeyExists(form,"img_file")>
-        <!--- Use the cffile tag to upload the image file. --->
-                <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
-                nameconflict="overwrite">
-                <cfquery name="img_data" datasource="img_data"> 
+    <cffunction name="uploadImg" access="remote">        
+        <cfargument  name="img_name" type="string">
+        <cfargument  name="description" type="string">
+        <cfset local.thisDir = expandPath("../uploads")>        
+        <cfif structKeyExists(form,"img_file")>        
+            <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
+            nameconflict="overwrite">
+            <cfquery name="img_data" datasource="img_data"> 
                 INSERT INTO img_data.img_table(img_name,description,file_name)
                 VALUES (<cfqueryparam value="#arguments.img_name#" cfsqltype="CF_SQL_VARCHAR">, <cfqueryparam value="#arguments.description#" cfsqltype="CF_SQL_VARCHAR">, "#fileupload.serverfile#") 
-                </cfquery>
-                <cfif fileUpload.fileWasSaved>
+            </cfquery>
+            <cfif fileUpload.fileWasSaved>
                     <cfset path=fileupload.serverdirectory & "\" & fileupload.serverfile>
                 <cfif not IsImageFile(path)>
                     <cfset errors = "Invalid Image!<br />"> <!--- clean up ---> 
@@ -416,25 +408,12 @@
                         <cfset ImageScaleToFit(myImage,20,20,"bilinear")>
                         <cfset newImageName =fileupload.serverdirectory & "\" & fileupload.serverFileName & "_thumbnail." &fileUpload.serverFileExt>
                         <cfimage source="#myImage#" action="write" destination="#newImageName#" overwrite="yes">
-                        
                         <cfset session.thumbail=newImageName>
                         <cfset session.directory=fileupload.serverdirectory>
-                        <cflocation url="../upload_img.cfm?upload=1">
-                        
-                   <!---<cfoutput>
-
-                        <div class='d-flex flex-column justify-content-center align-items-center'>
-                        <p class=' text-success font-weight-bold'>
-                        File Uploaded and thumbnail created!!
-                        <p>
-                        <cfimage source="#newImageName#" action="writeToBrowser">
-                        </div>
-                        </cfoutput>--->
-
+                        <cflocation url="../upload_img.cfm?upload=1">                       
                 </cfif>
             </cfif>
         </cfif>
-
     </cffunction>
 
     <cffunction name="display" access="remote"> 
