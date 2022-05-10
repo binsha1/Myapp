@@ -64,3 +64,12 @@ text-align: center;
      color:black;
      font-weight: 600;
  }
+ .btn-dark{
+     width:20%;
+ }
+ .lo-right{
+     float:right;
+ }
+ body{
+     background:green;
+ }

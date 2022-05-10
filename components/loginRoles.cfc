@@ -37,27 +37,15 @@
         <cffunction name="doLogout" access="public" output="false" returntype="void">
                 <cfset structDelete(session, "sessionUser")>
                 <cflogout>
-        </cffunction>
-
-        <!---- Insert Page Function---->
-        <cffunction  name="addPage" access="remote" returnType="boolean" >
-                <cfargument  name="page_name" type="string" >
-                <cfargument  name="page_desc" type="string" >
-                <cfquery name="page_data" datasource="cms_data"> 
-                        INSERT INTO cms_data.page(pagename,pagedesc) VALUES (<cfqueryparam value="#arguments.page_name#" cfsqltype="CF_SQL_VARCHAR">, <cfqueryparam value="#arguments.page_desc#" cfsqltype="CF_SQL_VARCHAR">) 
-                </cfquery>                
-                <cfset recordFound=true>        
-                <cfreturn recordFound>
-        </cffunction>
+        </cffunction>        
         <!---- Delete Page Function---->
-        <cffunction  name="delPage" access="remote" returnType="boolean">
-                <cfargument  name="page_id" type="integer" >
-                <cfoutput>#page_id#
-                </cfoutput>
+        <cffunction  name="delPage" access="public" returnType="boolean" output="true">
+                <cfargument  name="page_id" type="integer" >                
                 <cfquery name="page_data" datasource="cms_data"> 
-                        DELETE FROM cms_data.page WHERE pageid=<cfqueryparam value="#arguments.page_id#" cfsqltype="CF_SQL_INTEGER"> 
+                        DELETE FROM cms_data.page 
+                        WHERE pageid=<cfqueryparam value="#arguments.page_id#" cfsqltype="CF_SQL_INTEGER"> 
                 </cfquery>                
-                <cfset recordDelete=true>
+                <cfset local.recordDelete=true>
                 <cfreturn recordDelete>        
                 
         </cffunction>

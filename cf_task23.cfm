@@ -16,7 +16,7 @@
                     Data Saved Successfully
                 </div>
             </cfif>
-            <form method='post' ac  tion="components/employee.cfc?method=empFunc" name="img_form" enctype='multipart/form-data' class='col-lg-6 offset-lg-3 bg-white p-5' >
+            <form method='post' action="components/res.cfc?method=empFunc" name="img_form" enctype='multipart/form-data' class='col-lg-6 offset-lg-3 bg-white p-5' >
                 <div class='row justify-content-center'>
                     <h3 >Employment Application</h3>
                     <h5>Infinity Box Inc.</h5>

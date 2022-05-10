@@ -13,12 +13,13 @@
     </cffunction>
     
 <!---Login Functionality---->
-    <cffunction name="doLogin" access="remote" output="false" returntype="boolean">
+    <cffunction name="doLogin" access="public" output="true" returntype="boolean">
         <cfargument  name="userName" type="string" required="true">
         <cfargument  name="userPwd" type="string" required="true">
-        <cfset LoggedIn=false>
+        <cfset local.LoggedIn=false>
         <cfquery name="loginUser" datasource="login_user">
-            SELECT * FROM login_user.login_data WHERE user_name="#arguments.userName#" AND password="#arguments.userPwd#"
+            SELECT * FROM login_user.login_data 
+            WHERE user_name="#arguments.userName#" AND password="#arguments.userPwd#"
         </cfquery>
         <cfif loginUser.recordCount EQ 1>
             <cflogin>
@@ -26,7 +27,7 @@
                 </cfloginuser >
             </cflogin>            
             <cfset session.stLoggedInUser={'user_id'=loginUser.id,'user_name'=loginUser.user_name}>
-            <cfset LoggedIn=true>
+            <cfset local.LoggedIn=true>
         </cfif>
         <cfreturn LoggedIn>
     </cffunction>
