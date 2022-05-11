@@ -2,14 +2,14 @@
     <cffunction name="validateUser" access="public" output="false" returntype="array">
             <cfargument  name="userName" type="string" required="true">
             <cfargument  name="userPwd" type="string" required="true">
-            <cfset errorMessage=arrayNew(1)>
+            <cfset local.errorMessage=arrayNew(1)>
             <cfif arguments.userName EQ "">
                     <cfset arrayAppend(errorMessage, 'Please Provide User Name')>
             </cfif>
             <cfif arguments.userPwd EQ "">
                 <cfset arrayAppend(errorMessage, 'Please Provide Password')>
             </cfif>
-        <cfreturn errorMessage>
+        <cfreturn local.errorMessage>
     </cffunction>
     
 <!---Login Functionality---->
@@ -29,7 +29,7 @@
             <cfset session.stLoggedInUser={'user_id'=loginUser.id,'user_name'=loginUser.user_name}>
             <cfset local.LoggedIn=true>
         </cfif>
-        <cfreturn LoggedIn>
+        <cfreturn local.LoggedIn>
     </cffunction>
 
 <!---Logout Functionality---->

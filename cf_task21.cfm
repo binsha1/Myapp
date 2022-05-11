@@ -23,10 +23,8 @@
                                                     Birthday wish sent successfully
                                             </div>
                                         </cfif>                               
-                            </cfif> 
-                            <cfset data=createObject("component","components.res")>
-                            <cfset captcha=data.capString()>
-                            <cfset encodeCap = hash(captcha)>
+                            </cfif>
+                            
                             <div class="form-group row">
                                 <label for="exampleInputEmail1" class="form-label col-sm-4" >Birthday Baby Name</label>
                                 <div class='col-sm-8'>                            

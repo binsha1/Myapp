@@ -1,24 +1,24 @@
 <cfcomponent accessors="TRUE">
-    <cffunction  name="numStatus" access="remote">
+    <cffunction  name="numStatus" access="remote" output="false">
         <cfargument  name="Number" type="integer">
         <cfset local.status="">
-        <cfif Number EQ 1>
+        <cfif #arguments.Number# EQ 1>
             <cfset local.status="OK">
-        <cfelseif Number EQ 2>
+        <cfelseif #arguments.Number# EQ 2>
             <cfset local.status="OK">
-        <cfelseif Number EQ 3>
+        <cfelseif #arguments.Number# EQ 3>
             <cfset local.status="Fair">
-        <cfelseif Number EQ 4>
+        <cfelseif #arguments.Number# EQ 4>
             <cfset local.status="Good">
-        <cfelseif Number EQ 5>
+        <cfelseif #arguments.Number# EQ 5>
             <cfset local.status="Very Good">
         <cfelse>
             <cfset local.status="Error">
         </cfif>
-        <cflocation url="../cf_task1.cfm?status=#status#">
+        <cflocation url="../cf_task1.cfm?status=#local.status#">
     </cffunction>
 
-    <cffunction  name="numStatus2" access="remote">
+    <cffunction  name="numStatus2" access="remote" output="false">
         <cfargument name="Number" type="integer">
         <cfset local.status="">
         <cfswitch expression="#arguments.Number#"> 
@@ -29,20 +29,20 @@
             <cfcase value=5><cfset local.status="Very Good"></cfcase>
             <cfdefaultcase><cfset local.status="Error"></cfdefaultcase> 
         </cfswitch>        
-        <cflocation url="../cf_task2.cfm?status=#status#">
+        <cflocation url="../cf_task2.cfm?status=#local.status#">
     </cffunction>
 
     <cffunction  name="divide" access="remote" returntype="array" output="true">
             <cfargument name="Number" type="string">
             <cfset local.numArray=arrayNew(1)>
-            <cfloop list="#Number#" index="i" >
+            <cfloop list="#arguments.Number#" index="i" >
                 <cfif i mod 3>            
                         <cfcontinue>
                 <cfelse>
                     <cfset arrayAppend(numArray, i)>
                 </cfif>            
             </cfloop> 
-        <cfreturn numArray>           
+        <cfreturn local.numArray>           
     </cffunction>
 
     <cffunction name="dateFunc" access="public" returnType="array" output="true">
@@ -68,7 +68,7 @@
         <cfset arrayAppend(arrayN,deliver_age)>
         <cfset arrayAppend(arrayN,user_count)>
         <cfset arrayAppend(arrayN,mom_count)>
-        <cfreturn arrayN>
+        <cfreturn local.arrayN>
     </cffunction>
 
     <cffunction  name="structFunc" access="public" output="true">
@@ -77,7 +77,7 @@
         <cfset local.struct_name=structNew()>
         <cfset local.struct_name.Key=key>
         <cfset local.struct_name.Value=value>
-        <cfreturn struct_name>
+        <cfreturn local.struct_name>
     </cffunction>
 
     <cffunction  name="structFunc2" access="public" output="true">
@@ -137,7 +137,7 @@
             </cfif>
         </cfif>
         <cfdump var="#session.mystruct#">
-        <cfreturn yes_no>
+        <cfreturn local.yes_no>
     </cffunction>
 
     <cffunction  name="structFunc5" access="public" output="true">
@@ -158,7 +158,7 @@
         <cfset local.structArray = structKeyArray(Session.mystruct)>
         <cfset local.sortedKeys = structArray.sort("text","asc")>     
 	    <cfdump var="#session.mystruct#">
-        <cfreturn sortedKeys>   
+        <cfreturn local.sortedKeys>   
     </cffunction>
 
     <cffunction  name="queryFunc" access="public" output="true">
@@ -171,11 +171,11 @@
     <cffunction  name="textFunc" access="public" output="true">
         <cfargument  name="textString" type="string">
         <cfset local.sent="the quick brown fox jumps over the lazy dog">        
-        <cfset local.count_var=ListValueCount(sent,textString," ")>
-        <cfreturn count_var>
+        <cfset local.count_var=ListValueCount(sent,"#arguments.textString#"," ")>
+        <cfreturn local.count_var>
     </cffunction>
 
-    <cffunction  name="loopFunc">
+    <cffunction  name="loopFunc" access="public" output="false">
         <cfset local.l =3>
         <cfloop from="1" to="3" index="i">        
             <cfloop from="1" to="3" index="j" >
@@ -186,7 +186,7 @@
         </cfloop>
     </cffunction>
 
-    <cffunction  name="evenOdd" access="remote">
+    <cffunction  name="evenOdd" access="remote" output="false">
         <cfargument  name="num_value" type="integer">        
         <cfset local.numArray=arrayNew(1)>
         <cfset session.nArray=numArray>
@@ -198,13 +198,13 @@
         <cflocation  url="../cf_task17.cfm">
     </cffunction>
     
-    <cffunction  name="cookieFunc" access="remote">
+    <cffunction  name="cookieFunc" access="remote" output="false">
         <cfif IsDefined("cookie.VisitsCounter") eq "NO">
             <cfcookie name="VisitsCounter" value="0">
         </cfif>
         <cfif IsDefined("cookie.VisitsCounter") eq "YES">
-            <cfset c_value=cookie.VisitsCounter>
-            <cfset c_count=c_value+1>
+            <cfset local.c_value=cookie.VisitsCounter>
+            <cfset local.c_count=c_value+1>
             <cfcookie name="VisitsCounter" value="#c_count#">
         </cfif>
         <cfset session.c_name=cookie.VisitsCounter>
@@ -212,11 +212,11 @@
     </cffunction>
 
     <cffunction name="capString" access="public" returnType="string" output="false" >
-        <cfset var chars = "23456789ABCDEFGHJKMNPQRS*@/abcdefghijklmnopqrst()">
-        <cfset var length = randRange(4,7)>
-        <cfset var result = "">
-        <cfset var i = "">
-        <cfset var char = "">
+        <cfset local.chars = "23456789ABCDEFGHJKMNPQRS*@/abcdefghijklmnopqrst()">
+        <cfset local.length = randRange(4,7)>
+        <cfset local.result = "">
+        <cfset local.i = "">
+        <cfset local.char = "">
         
         <cfscript>
         for(i=1; i <= length; i++) {
@@ -224,10 +224,10 @@
             result&=char;
         }
         </cfscript>		
-        <cfreturn result>
+        <cfreturn local.result>
     </cffunction>
 
-    <cffunction name="capFunc" access="remote">
+    <cffunction name="capFunc" access="remote" output="false">
         <cfargument  name="captchaText" type="string">
         <cfargument  name="cHash" type="string">
         <cfargument  name="mail_add" type="string">
@@ -239,7 +239,7 @@
         <cflocation  url="../cf_task20.cfm?mail_add=#mail_add#">
     </cffunction>
 
-    <cffunction name="birthWishes" access="remote">
+    <cffunction name="birthWishes" access="remote" output="false">
         <cfargument  name="img_file" type="string">
         <cfset local.thisDir = expandPath("../uploads")>        
         <cfif len(trim(arguments.img_file)) >
@@ -263,7 +263,7 @@
         <cfset local.jData = [{"Name":"saravanan","Age":27,"LOCATION":"dubai"},{"Name":"Ram","Age":26,"LOCATION":"Kovilpatti"}]>
         <cfset local.tData = serializeJSON(jData)> 
         <cfset local.dData = deserializeJSON(tData)>
-        <cfreturn dData> 
+        <cfreturn local.dData> 
     </cffunction>
 
     <cffunction  name="wordFunc" access="remote" output="false">
@@ -326,7 +326,7 @@
             </cfif>        
     </cffunction>
 
-    <cffunction name="loginFunc2" access="remote" >
+    <cffunction name="loginFunc2" access="remote" output="false" >
             <cfargument  name="user_name" type="string">
             <cfargument  name="pwd" type="string">
             <cfset local.userRoles=createObject("component","loginRoles")>
@@ -359,10 +359,10 @@
             <cfargument  name="page_name" type="string">
             <cfargument  name="description" type="string">
             <cfquery name="page_data" datasource="cms_data"> 
-                        INSERT INTO cms_data.page(pagename,pagedesc) 
-                        VALUES (<cfqueryparam value="#arguments.page_name#" cfsqltype="CF_SQL_VARCHAR">,
-                         <cfqueryparam value="#arguments.description#" cfsqltype="CF_SQL_VARCHAR">) 
-                </cfquery>
+                    INSERT INTO cms_data.page(pagename,pagedesc) 
+                    VALUES (<cfqueryparam value="#arguments.page_name#" cfsqltype="CF_SQL_VARCHAR">,
+                    <cfqueryparam value="#arguments.description#" cfsqltype="CF_SQL_VARCHAR">) 
+            </cfquery>
             <cflocation  url="../page_list.cfm?add=1">                       
     </cffunction>
 
@@ -373,9 +373,8 @@
                         WHERE pageid=<cfqueryparam value="#arguments.page_id#" cfsqltype="CF_SQL_INTEGER"> 
                 </cfquery>                
                 <cfset local.recordDelete=true>
-                <cfreturn recordDelete>       
-                
-        </cffunction>
+                <cfreturn local.recordDelete>      
+    </cffunction>
 
     <cffunction  name="upQuery" access="public" output="true" returntype="query">
             <cfargument  name="id" type="integer">
@@ -397,7 +396,7 @@
             <cflocation  url="../cf_task24.cfm?save=1">        
     </cffunction>   
 
-    <cffunction name="uploadImg" access="remote">        
+    <cffunction name="uploadImg" access="remote" output="false">        
         <cfargument  name="img_name" type="string">
         <cfargument  name="description" type="string">
         <cfset local.thisDir = expandPath("../uploads")>        
@@ -428,7 +427,7 @@
         </cfif>
     </cffunction>
 
-    <cffunction  name="empFunc" access="remote">        
+    <cffunction  name="empFunc" access="remote" output="false">        
                 <cfargument  name="position" type="string">                
                 <cfargument  name="Relocate" type="string">
                 <cfargument  name="dollar" type="string" required="no">
@@ -480,7 +479,6 @@
             </cfquery>
             <cfreturn page_data>
     </cffunction>  
-
     <cffunction name="queryRes3" output="true" returntype="query">            
             <cfquery name='page' datasource='word_data'>
                     SELECT * FROM word_data.word_count 
@@ -494,14 +492,11 @@
             </cfquery>
             <cfreturn page>
     </cffunction>
-    <cfquery name="img_data" datasource="img_data">
-                SELECT *
-                        FROM img_table
-                </cfquery>
+    
     <cffunction name="queryRes5" output="true" returntype="query">            
             <cfquery name="img_data" datasource="img_data">
                 SELECT * FROM img_table
-                </cfquery>
+            </cfquery>
             <cfreturn img_data>
     </cffunction>
 </cfcomponent>
