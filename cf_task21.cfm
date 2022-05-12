@@ -8,7 +8,7 @@
       </head>
       <body class='bg-success'>
             <div class='container py-5'> 
-                  <div class="col-lg-6 offset-lg-3 bg-white p-5">
+                    <div class="col-lg-6 offset-lg-3 bg-white p-5">
                         <h3 class='text-center pb-3'>Birthday Form</h3>
                         <form method='post' action="components/res.cfc?method=birthWishes" enctype="multipart/form-data" name="img_form">
                             <cfif structKeyExists(session,"birthday")>
@@ -53,7 +53,7 @@
                                   <div class='col-sm-12 text-center'>
                                     <input type="submit" name="Submit"  value="Submit" class="btn btn-primary">
                                   </div>
-                                </div>
+                            </div>
                         </form>    
                     </div>
             </div>

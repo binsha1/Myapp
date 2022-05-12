@@ -11,24 +11,24 @@
         <div class='container py-5'>
             <h3 class='text-success'>JSON DATA IN TABLE </h3>
             <table class='table table-bordered'>
-            <thead class='bg-dark text-white'>
-                <tr>
-                    <th>Name</th>
-                    <th>Age</th>
-                    <th>Location</th>
-                </tr>
+                <thead class='bg-dark text-white'>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Location</th>
+                    </tr>
                 </thead>
                 <cfloop array ="#dData#" index="i">
-                <cfoutput>
-                <tbody>
-                <tr>
-                    <td>#i.Name#</td>
-                    <td>#i.Age#</td>
-                    <td>#i.LOCATION#</td>
-                </tr>
-                </cfoutput>
+                    <cfoutput>
+                    <tbody>
+                        <tr>
+                            <td>#i.Name#</td>
+                            <td>#i.Age#</td>
+                            <td>#i.LOCATION#</td>
+                        </tr>
+                    </tbody>
+                    </cfoutput>                        
                 </cfloop>
-                </tbody>
             </table>
         </div>
     </body>

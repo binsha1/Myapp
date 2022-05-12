@@ -74,7 +74,7 @@
                         </h3>                
                      <cfelseif #structData["#i#" ]#  EQ 2>                      
                         <h4 class='text-success'> 
-                     -#i# ( #structData["#i#" ]#)                        
+                        -#i# ( #structData["#i#" ]#)                        
                         </h4>
                      <cfelseif #structData["#i#" ]#  EQ 1>                 
                         <h5 class='text-primary'> 

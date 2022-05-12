@@ -9,35 +9,35 @@
             <title>Edit Form</title>
         </head>
         <body class="bg-success">
-              <cfset res=createObject("component","components.res")>
-              <cfset update_data=res.upQuery(id)>               
-              <cfoutput query="update_data">
-              <div class='container py-5'>
-                  <div class="col-lg-6 offset-lg-3 bg-white p-5">
+            <cfset res=createObject("component","components.res")>
+            <cfset update_data=res.upQuery(id)>               
+            <cfoutput query="update_data">
+                <div class='container py-5'>
+                    <div class="col-lg-6 offset-lg-3 bg-white p-5">
                         <h3 class='text-center pb-3'>Update Page <span class="lo-right"><a class='btn btn-success' href='cf_task28.cfm?logout'>Logout <i class="fa fa-sign-out"></i></a></span></h3>
                         <form method='post' action="components/res.cfc?method=updatePage"  name="img_form">
-                                <div class="form-group row">
-                                      <label for="exampleInputEmail1" class="form-label col-sm-3" >Page Name</label>
-                                      <div class='col-sm-9'>
-                                            <input type="text" class="form-control" name="pagename" placeholder="Enter Page Name" value="#pagename#" >
-                                            <input type="hidden" name="id" value="#id#">
-                                      </div>
+                            <div class="form-group row">
+                                <label for="exampleInputEmail1" class="form-label col-sm-3" >Page Name</label>
+                                <div class='col-sm-9'>
+                                    <input type="text" class="form-control" name="pagename" placeholder="Enter Page Name" value="#pagename#" >
+                                    <input type="hidden" name="id" value="#id#">
                                 </div>
-                                <div class="form-group row pt-3">
-                                    <label for="exampleInputEmail1" class="form-label col-sm-3" >Page Description</label>
-                                    <div class='col-sm-9'>
-                                          <textarea  name="pagedesc" class='form-control' required='yes'> #pagedesc#
-                                        </textarea >
-                                    </div>
-                                </div>                    
-                                <div class='form-group row pt-3'>                  
-                                    <div class='col-sm-12 text-center'>
-                                            <input type="submit" name="Submit"  value="Submit" class="btn btn-success">
-                                      </div>
+                            </div>
+                            <div class="form-group row pt-3">
+                                <label for="exampleInputEmail1" class="form-label col-sm-3" >Page Description</label>
+                                <div class='col-sm-9'>
+                                    <textarea  name="pagedesc" class='form-control' required='yes'> #pagedesc#
+                                    </textarea >
                                 </div>
-                          </form>
-                  </div>
-              </div>
+                            </div>                    
+                            <div class='form-group row pt-3'>                  
+                                <div class='col-sm-12 text-center'>
+                                    <input type="submit" name="Submit"  value="Submit" class="btn btn-success">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </cfoutput>
         </body> 
     </cfif>

@@ -18,14 +18,13 @@
                 </form>               
                 
                 <cfif structKeyExists(session, "c_name")>
-                        <cfset cookie_value=session.c_name>
-                        <div class="row">
-                            <cfoutput>
+                    <cfset cookie_value=session.c_name>
+                    <div class="row">
+                        <cfoutput>
                               <p class="text-center text-success">Cookie Value: #cookie_value# </p>
-                            </cfoutput>
-                        </div>
-                </cfif>
-                </div>
+                        </cfoutput>
+                    </div>
+                </cfif>                
             </div>
         </div>
     </body> 

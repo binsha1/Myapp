@@ -12,9 +12,9 @@
                 <form name="nform" method="post" action="components/res.cfc?method=evenOdd" >
                     <h1 class='text-center pb-3'>Text Form</h1>
                     <div class="form-group row">
-                        <label class="form-label col-sm-4" >Enter Text</label>
+                        <label class="form-label col-sm-4" >Enter Numeric Value</label>
                         <div class='col-sm-8'>
-                            <input type = "text" class='form-control' name = "num_value" id="num" required = "Yes">
+                            <input type = "text" class='form-control' name = "num_value" id="num" required = "Yes" placeholder="Enter Numeric Value">
                         </div>
                     </div>                
                     <div class='form-group row pt-3'>

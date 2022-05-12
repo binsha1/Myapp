@@ -191,7 +191,7 @@
         <cfset local.numArray=arrayNew(1)>
         <cfset session.nArray=numArray>
         <cfif isNumeric(num_value)>
-            <cfloop from ="1" to =#num_value# index="i">
+            <cfloop from ="1" to =#arguments.num_value# index="i">
                 <cfset arrayAppend(session.nArray, i)>
             </cfloop>
         </cfif>      
@@ -204,8 +204,8 @@
         </cfif>
         <cfif IsDefined("cookie.VisitsCounter") eq "YES">
             <cfset local.c_value=cookie.VisitsCounter>
-            <cfset local.c_count=c_value+1>
-            <cfcookie name="VisitsCounter" value="#c_count#">
+            <cfset local.c_count=local.c_value+1>
+            <cfcookie name="VisitsCounter" value="#local.c_count#">
         </cfif>
         <cfset session.c_name=cookie.VisitsCounter>
         <cflocation  url="../cf_task19.cfm">        
@@ -231,16 +231,17 @@
         <cfargument  name="captchaText" type="string">
         <cfargument  name="cHash" type="string">
         <cfargument  name="mail_add" type="string">
-        <cfif hash(captchaText) neq cHash>
+        <cfif hash(#arguments.captchaText#) neq #arguments.cHash#>
             <cfset session.cap="false">
         <cfelse>
             <cfset session.cap="true">
         </cfif>
-        <cflocation  url="../cf_task20.cfm?mail_add=#mail_add#">
+        <cflocation  url="../cf_task20.cfm?mail_add=#arguments.mail_add#">
     </cffunction>
 
     <cffunction name="birthWishes" access="remote" output="false">
         <cfargument  name="img_file" type="string">
+        <cfargument  name="baby_name" type="string">
         <cfset local.thisDir = expandPath("../uploads")>        
         <cfif len(trim(arguments.img_file)) >
                 <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
@@ -248,8 +249,8 @@
                 <cfset local.file_name=#fileupload.serverfile# >         
                 <cfset local.fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
                 <cfmail to="#form.baby_mail#" from="binshasr3@gmail.com" subject="Happy Birthday" > 
-                <cfmailparam file="#fileLoc#" disposition="inline"  contentID="image1">
-                        <img src="cid:image1">Happy Birthday  #form.baby_name# !
+                <cfmailparam file="#local.fileLoc#" disposition="inline"  contentID="image1">
+                        <img src="cid:image1">Happy Birthday  #arguments.baby_name# !
                 </cfmail>
                 <cfset session.birthday="true">            
                 <cfelse>
@@ -259,7 +260,7 @@
         <cflocation  url="../cf_task21.cfm">
     </cffunction>
     
-    <cffunction name="jsonFunc" access="public" output="true">
+    <cffunction name="jsonFunc" access="public" output="true" returntype="array">
         <cfset local.jData = [{"Name":"saravanan","Age":27,"LOCATION":"dubai"},{"Name":"Ram","Age":26,"LOCATION":"Kovilpatti"}]>
         <cfset local.tData = serializeJSON(jData)> 
         <cfset local.dData = deserializeJSON(tData)>
@@ -272,7 +273,7 @@
             <cfset local.structData=wordData.init(#arguments.description#)>
             <cfset local.skeys=structKeyList(structData)>
             <cftry>
-                <cfloop list="#skeys#" index="i"> 
+                <cfloop list="#local.skeys#" index="i"> 
                     <cfquery name="word" datasource="word_data">
                         INSERT INTO word_data.word_count(word_name) 
                         VALUES(<cfqueryparam value="#i#" cfsqltype="CF_SQL_VARCHAR"> )
@@ -298,7 +299,7 @@
                 <cfset local.structData=wordData.init(Contents)>
                 <cfset local.skeys=structKeyList(structData)>
                 <cftry>
-                <cfloop list="#skeys#" index="i">              
+                <cfloop list="#local.skeys#" index="i">              
                     <cfquery name="word" datasource="read_data">
                         INSERT INTO read_data.read_count(word_name) 
                         VALUES(<cfqueryparam value="#i#" cfsqltype="CF_SQL_VARCHAR"> )
@@ -315,10 +316,10 @@
             <cfargument  name="user_name" type="string">
             <cfargument  name="pwd" type="string">
             <cfset local.authenticate_user=createObject("component","authenticateUser")>
-            <cfset local.errorMessage=authenticate_user.validateUser(user_name,pwd)>
-            <cfif arrayIsEmpty(errorMessage)>
-                    <cfset local.userLogin=authenticate_user.doLogin(user_name,pwd)>
-                    <cfif userLogin EQ true>                        
+            <cfset local.errorMessage=authenticate_user.validateUser(#arguments.user_name#,#arguments.pwd#)>
+            <cfif arrayIsEmpty(local.errorMessage)>
+                    <cfset local.userLogin=authenticate_user.doLogin(#arguments.user_name#,#arguments.pwd#)>
+                    <cfif local.userLogin EQ true>                        
                         <cflocation url="../welcome.cfm">
                     <cfelse>
                         <cflocation  url="../cf_task27.cfm?invalid=true">>
@@ -330,8 +331,8 @@
             <cfargument  name="user_name" type="string">
             <cfargument  name="pwd" type="string">
             <cfset local.userRoles=createObject("component","loginRoles")>
-            <cfset local.isLogin=userRoles.doLogin(user_name,pwd)>
-            <cfif isLogin EQ true>
+            <cfset local.isLogin=userRoles.doLogin(#arguments.user_name#,#arguments.pwd#)>
+            <cfif local.isLogin EQ true>
                 <cfif isUserInRole('admin') OR isUserInRole('editor')>
                     <cflocation url="../page_list.cfm">
                 <cfelse>
@@ -400,7 +401,7 @@
         <cfargument  name="img_name" type="string">
         <cfargument  name="description" type="string">
         <cfset local.thisDir = expandPath("../uploads")>        
-        <cfif structKeyExists(form,"img_file")>        
+        <cfif  len(trim(#arguments.img_name#))>        
             <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
             nameconflict="overwrite">
             <cfquery name="img_data" datasource="img_data"> 
@@ -408,14 +409,14 @@
                 VALUES (<cfqueryparam value="#arguments.img_name#" cfsqltype="CF_SQL_VARCHAR">, <cfqueryparam value="#arguments.description#" cfsqltype="CF_SQL_VARCHAR">, "#fileupload.serverfile#") 
             </cfquery>
             <cfif fileUpload.fileWasSaved>
-                    <cfset path=fileupload.serverdirectory & "\" & fileupload.serverfile>
+                    <cfset local.path=fileupload.serverdirectory & "\" & fileupload.serverfile>
                 <cfif not IsImageFile(path)>
-                    <cfset errors = "Invalid Image!<br />"> <!--- clean up ---> 
+                    <cfset local.errors = "Invalid Image!<br />"> <!--- clean up ---> 
                     <cffile action="delete" file="#path#">
                 <cfelseif fileupload.filesize gt 1000000>
                         <cfset session.fsize="gt">
                 <cfelse>
-                        <cfimage action="read" source="#path#" name="myImage">
+                        <cfimage action="read" source="#local.path#" name="myImage">
                         <cfset ImageScaleToFit(myImage,20,20,"bilinear")>
                         <cfset newImageName =fileupload.serverdirectory & "\" & fileupload.serverFileName & "_thumbnail." &fileUpload.serverFileExt>
                         <cfimage source="#myImage#" action="write" destination="#newImageName#" overwrite="yes">
@@ -456,8 +457,8 @@
                         <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.Relocate#">,
                         <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.cdate#">,
                         <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.p_url#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value="#file_name#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#salary#">,
+                        <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.file_name#">,
+                        <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#local.salary#">,
                         <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.f_name#">,
                         <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.l_name#">,
                         <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.email#">,
