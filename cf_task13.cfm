@@ -28,7 +28,7 @@
                         <cfset cnt=data.textFunc(textString)>
                         <cfif cnt GT 0>
                             <cfoutput>
-                            <h3 class="text-success">Found keyword in #cnt# times</h3>
+                                <h3 class="text-success">Found keyword in #cnt# times</h3>
                             </cfoutput>
                         <cfelse>
                             <h3 class="text-danger">Keyword Not Found</h3>

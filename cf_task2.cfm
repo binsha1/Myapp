@@ -14,13 +14,13 @@
                     <cfoutput>         
                     <div class="alert alert-success alert-dismissible col-lg-6 offset-lg-3">
                         <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        #url.status#
+                                #url.status#
                     </div>            
                     </cfoutput>
                     <cfelse>
                     <div class="alert alert-danger alert-dismissible col-lg-6 offset-lg-3">
                         <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        Invalid Number
+                                Invalid Number
                     </div>
                 </cfif>
             </cfif>           
@@ -29,8 +29,7 @@
                 <div class="form-group row">
                     <label class="form-label col-sm-4" >Enter Number</label>
                     <div class='col-sm-8'>
-                        <input type = "number" class='form-control' name = "Number" min="1" max="5"
-                         required = "Yes" >
+                        <input type = "number" class='form-control' name = "Number" min="1" max="5" required = "Yes" >
                     </div>
                 </div>
                 <div class='form-group row pt-3'>

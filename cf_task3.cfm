@@ -23,18 +23,18 @@
                     </div>
                 </div>
                 <div class='row'>
-                        <p class='text-success'> Output :
-                            <cfif structKeyExists(form, "Submit")>
-                                <cfset num=form.Number>
-                                <cfset out=createObject("component","components.res")>
-                                <cfset out_res=out.divide(num)>
-                                <cfloop array="#out_res#" index="index">
-                                        <cfoutput>
-                                        #index#
-                                        </cfoutput>
-                                </cfloop>
-                            </cfif>
-                        </p>
+                    <p class='text-success'> Output :
+                        <cfif structKeyExists(form, "Submit")>
+                            <cfset num=form.Number>
+                            <cfset out=createObject("component","components.res")>
+                            <cfset out_res=out.divide(num)>
+                            <cfloop array="#out_res#" index="index">
+                                <cfoutput>
+                                    #index#
+                                </cfoutput>
+                            </cfloop>
+                        </cfif>
+                    </p>
                 </div>
             </form>
         </div>

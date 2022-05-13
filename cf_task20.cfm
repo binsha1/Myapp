@@ -9,54 +9,54 @@
     <body class='bg-success'>
         <div class='container py-5'> 
             <div class="col-lg-6 offset-lg-3 bg-white p-5">
-                  <h3 class='text-center pb-3'>Captcha and Email Validation </h3>
-                  <form method='post' action="components/res.cfc?method=capFunc" enctype="multipart/form-data" name="img_form">
-                      <cfif structKeyExists(session,"cap")>
-                          <cfparam  name="mail_add" default="v">
-                          <cfif session.cap EQ "false">
-                              <div class="alert alert-danger alert-dismissible ">
-                                  <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <h3 class='text-center pb-3'>Captcha and Email Validation </h3>
+                <form method='post' action="components/res.cfc?method=capFunc" enctype="multipart/form-data" name="img_form">
+                    <cfif structKeyExists(session,"cap")>
+                        <cfparam  name="mail_add" default="v">
+                        <cfif session.cap EQ "false">
+                            <div class="alert alert-danger alert-dismissible ">
+                                <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                       Text mismatch! Please reenter.
-                              </div>
-                          <cfelse>
-                              <cfif mail_add NEQ "v">
-                                    <div class="alert alert-success alert-dismissible ">
-                                          <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                          <cfoutput> #mail_add# successfully subscribe our newsletter.</cfoutput>
-                                    </div>
-                              </cfif>
-                          </cfif>                               
-                      </cfif> 
-                      <cfset data=createObject("component","components.res")>
-                      <cfset captcha=data.capString()>
-                      <cfset encodeCap = hash(captcha)>
-                      <div class="form-group row">
-                          <label for="exampleInputEmail1" class="form-label col-sm-4" >Captcha</label>
-                          <div class='col-sm-8'>                            
-                              <cfimage action="captcha" difficulty="low" text="#captcha#" width="300" height="100"/>
-                              <cfoutput>
-                              <input type="hidden" name="cHash" value="#encodeCap#">
-                              </cfoutput>                              
-                          </div>                          
-                      </div>
-                      <div class="form-group row pt-3">
-                            <label for="exampleInputEmail1" class="form-label col-sm-4" >Captcha Text</label>
-                            <div class='col-sm-8'>
+                            </div>
+                        <cfelse>
+                            <cfif mail_add NEQ "v">
+                                <div class="alert alert-success alert-dismissible ">
+                                    <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <cfoutput> #mail_add# successfully subscribe our newsletter.</cfoutput>
+                                </div>
+                            </cfif>
+                        </cfif>                               
+                    </cfif> 
+                    <cfset data=createObject("component","components.res")>
+                    <cfset captcha=data.capString()>
+                    <cfset encodeCap = hash(captcha)>
+                    <div class="form-group row">
+                        <label for="exampleInputEmail1" class="form-label col-sm-4" >Captcha</label>
+                        <div class='col-sm-8'>                            
+                            <cfimage action="captcha" difficulty="low" text="#captcha#" width="300" height="100"/>
+                            <cfoutput>
+                                <input type="hidden" name="cHash" value="#encodeCap#">
+                            </cfoutput>                              
+                        </div>                          
+                    </div>
+                    <div class="form-group row pt-3">
+                        <label for="exampleInputEmail1" class="form-label col-sm-4" >Captcha Text</label>
+                        <div class='col-sm-8'>
                               <input type="text" class="form-control" name="captchaText" placeholder="Enter Captcha"  required="yes">
-                            </div>                           
-                      </div>
-                      <div class="form-group row pt-3">
-                          <label for="exampleInputEmail1" class="form-label col-sm-4 " >Email</label>
-                          <div class='col-sm-8'>
+                        </div>                           
+                    </div>
+                    <div class="form-group row pt-3">
+                        <label for="exampleInputEmail1" class="form-label col-sm-4 " >Email</label>
+                        <div class='col-sm-8'>
                             <input type="email" class="form-control" name="mail_add" placeholder="Enter Email Address"  required="yes">
-                          </div>                           
-                      </div>
-                      <div class='form-group row pt-3'>                        
-                          <div class='col-sm-12 text-center'>
+                        </div>                           
+                    </div>
+                    <div class='form-group row pt-3'>                        
+                        <div class='col-sm-12 text-center'>
                             <input type="submit" name="Submit"  value="Submit" class="btn btn-primary">
-                          </div>
-                      </div>
-                  </form>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </body>
