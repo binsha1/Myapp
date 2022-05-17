@@ -244,18 +244,18 @@
         <cfargument  name="baby_name" type="string">
         <cfset local.thisDir = expandPath("../uploads")>        
         <cfif len(trim(arguments.img_file)) >
-                <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
+            <cffile action="upload" fileField="form.img_file"  destination="#thisDir#" result="fileUpload"
                 nameconflict="overwrite">
-                <cfset local.file_name=#fileupload.serverfile# >         
-                <cfset local.fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
-                <cfmail to="#form.baby_mail#" from="binshasr3@gmail.com" subject="Happy Birthday" > 
-                <cfmailparam file="#local.fileLoc#" disposition="inline"  contentID="image1">
-                        <img src="cid:image1">Happy Birthday  #arguments.baby_name# !
-                </cfmail>
-                <cfset session.birthday="true">            
-                <cfelse>
-                    <cfset local.fileLoc="">                
-                    <cfset session.birthday="false">            
+            <cfset local.file_name=#fileupload.serverfile# >         
+            <cfset local.fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >
+            <cfmail to="#form.baby_mail#" from="binshasr3@gmail.com" subject="Happy Birthday" > 
+            <cfmailparam file="#local.fileLoc#" disposition="inline"  contentID="image1">
+                <img src="cid:image1">Happy Birthday  #arguments.baby_name# !
+            </cfmail>
+            <cfset session.birthday="true">            
+        <cfelse>
+            <cfset local.fileLoc="">                
+            <cfset session.birthday="false">            
         </cfif>    
         <cflocation  url="../cf_task21.cfm">
     </cffunction>
@@ -268,37 +268,36 @@
     </cffunction>
 
     <cffunction  name="wordFunc" access="remote" output="false">
-            <cfargument  name="description" type="string">
-            <cfset local.wordData=createObject("component", "tagCloud")>
-            <cfset local.structData=wordData.init(#arguments.description#)>
-            <cfset local.skeys=structKeyList(structData)>
-            <cftry>
-                <cfloop list="#local.skeys#" index="i"> 
-                    <cfquery name="word" datasource="word_data">
-                        INSERT INTO word_data.word_count(word_name) 
-                        VALUES(<cfqueryparam value="#i#" cfsqltype="CF_SQL_VARCHAR"> )
-                    </cfquery>
-                </cfloop>
-                <cfcatch type="database">
-                </cfcatch>
-            </cftry>
-            <cflocation url="../count.cfm?desc='#arguments.description#">
+        <cfargument  name="description" type="string">
+        <cfset local.wordData=createObject("component", "tagCloud")>
+        <cfset local.structData=wordData.init(#arguments.description#)>
+        <cfset local.skeys=structKeyList(structData)>
+        <cftry>
+            <cfloop list="#local.skeys#" index="i"> 
+                <cfquery name="word" datasource="word_data">
+                    INSERT INTO word_data.word_count(word_name) 
+                    VALUES(<cfqueryparam value="#i#" cfsqltype="CF_SQL_VARCHAR"> )
+                </cfquery>
+            </cfloop>
+        <cfcatch type="database">
+        </cfcatch>
+        </cftry>
+        <cflocation url="../count.cfm?desc='#arguments.description#">
     </cffunction>
 
     <cffunction name="wordFunc2" access="remote" output="false">
         <cfargument  name="doc_file" type="string">
         <cfset local.thisDir = expandPath("../uploads")>        
         <cfif len(trim(#arguments.doc_file#)) >
-                <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload"
+            <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload"
                 nameconflict="overwrite">
-                <cfset local.file_name=#fileupload.serverfile# >            
-                <cfset local.fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >       
-            
-                <cffile action="read" file="#fileLoc#" variable="Contents">
-                <cfset local.wordData=createObject("component", "tagCloud")>
-                <cfset local.structData=wordData.init(Contents)>
-                <cfset local.skeys=structKeyList(structData)>
-                <cftry>
+            <cfset local.file_name=#fileupload.serverfile# >            
+            <cfset local.fileLoc=fileupload.serverDirectory & '\' & fileupload.serverfile >       
+            <cffile action="read" file="#fileLoc#" variable="Contents">
+            <cfset local.wordData=createObject("component", "tagCloud")>
+            <cfset local.structData=wordData.init(Contents)>
+            <cfset local.skeys=structKeyList(structData)>
+            <cftry>
                 <cfloop list="#local.skeys#" index="i">              
                     <cfquery name="word" datasource="read_data">
                         INSERT INTO read_data.read_count(word_name) 
@@ -307,40 +306,40 @@
                 </cfloop>
                 <cfcatch type="database">                
                 </cfcatch>
-                </cftry>              
-                <cflocation url="../countf.cfm?desc='#Contents#">       
+            </cftry>              
+            <cflocation url="../countf.cfm?desc='#Contents#">       
         </cfif>
     </cffunction>
 
     <cffunction  name="loginFunc" access="remote" output="false">
-            <cfargument  name="user_name" type="string">
-            <cfargument  name="pwd" type="string">
-            <cfset local.authenticate_user=createObject("component","authenticateUser")>
-            <cfset local.errorMessage=authenticate_user.validateUser(#arguments.user_name#,#arguments.pwd#)>
-            <cfif arrayIsEmpty(local.errorMessage)>
-                    <cfset local.userLogin=authenticate_user.doLogin(#arguments.user_name#,#arguments.pwd#)>
-                    <cfif local.userLogin EQ true>                        
-                        <cflocation url="../welcome.cfm">
-                    <cfelse>
-                        <cflocation  url="../cf_task27.cfm?invalid=true">>
-                    </cfif>
-            </cfif>        
+        <cfargument  name="user_name" type="string">
+        <cfargument  name="pwd" type="string">
+        <cfset local.authenticate_user=createObject("component","authenticateUser")>
+        <cfset local.errorMessage=authenticate_user.validateUser(#arguments.user_name#,#arguments.pwd#)>
+        <cfif arrayIsEmpty(local.errorMessage)>
+            <cfset local.userLogin=authenticate_user.doLogin(#arguments.user_name#,#arguments.pwd#)>
+            <cfif local.userLogin EQ true>                        
+                <cflocation url="../welcome.cfm">
+            <cfelse>
+                <cflocation  url="../cf_task27.cfm?invalid=true">>
+            </cfif>
+        </cfif>        
     </cffunction>
 
     <cffunction name="loginFunc2" access="remote" output="false" >
-            <cfargument  name="user_name" type="string">
-            <cfargument  name="pwd" type="string">
-            <cfset local.userRoles=createObject("component","loginRoles")>
-            <cfset local.isLogin=userRoles.doLogin(#arguments.user_name#,#arguments.pwd#)>
-            <cfif local.isLogin EQ true>
-                <cfif isUserInRole('admin') OR isUserInRole('editor')>
-                    <cflocation url="../page_list.cfm">
-                <cfelse>
-                    <cflocation url="../page_menu.cfm">
-                </cfif>
+        <cfargument  name="user_name" type="string">
+        <cfargument  name="pwd" type="string">
+        <cfset local.userRoles=createObject("component","loginRoles")>
+        <cfset local.isLogin=userRoles.doLogin(#arguments.user_name#,#arguments.pwd#)>
+        <cfif local.isLogin EQ true>
+            <cfif isUserInRole('admin') OR isUserInRole('editor')>
+                <cflocation url="../page_list.cfm">
             <cfelse>
-                <cflocation  url="../cf_task28?invalid=true"> 
-            </cfif>          
+                <cflocation url="../page_menu.cfm">
+            </cfif>
+        <cfelse>
+            <cflocation  url="../cf_task28?invalid=true"> 
+        </cfif>          
     </cffunction>
 
     <cffunction  name="updatePage" access="remote" output="false">
@@ -357,44 +356,44 @@
     </cffunction>
 
     <cffunction  name="addPage" access="remote" output="false">
-            <cfargument  name="page_name" type="string">
-            <cfargument  name="description" type="string">
-            <cfquery name="page_data" datasource="cms_data"> 
-                    INSERT INTO cms_data.page(pagename,pagedesc) 
-                    VALUES (<cfqueryparam value="#arguments.page_name#" cfsqltype="CF_SQL_VARCHAR">,
-                    <cfqueryparam value="#arguments.description#" cfsqltype="CF_SQL_VARCHAR">) 
-            </cfquery>
-            <cflocation  url="../page_list.cfm?add=1">                       
+        <cfargument  name="page_name" type="string">
+        <cfargument  name="description" type="string">
+        <cfquery name="page_data" datasource="cms_data"> 
+            INSERT INTO cms_data.page(pagename,pagedesc) 
+            VALUES (<cfqueryparam value="#arguments.page_name#" cfsqltype="CF_SQL_VARCHAR">,
+            <cfqueryparam value="#arguments.description#" cfsqltype="CF_SQL_VARCHAR">) 
+        </cfquery>
+        <cflocation  url="../page_list.cfm?add=1">                       
     </cffunction>
 
     <cffunction  name="delPage" access="public" returnType="boolean" output="true">
-                <cfargument  name="page_id" type="integer" >                
-                <cfquery name="page_data" datasource="cms_data"> 
-                        DELETE FROM cms_data.page 
-                        WHERE pageid=<cfqueryparam value="#arguments.page_id#" cfsqltype="CF_SQL_INTEGER"> 
-                </cfquery>                
-                <cfset local.recordDelete=true>
-                <cfreturn local.recordDelete>      
+        <cfargument  name="page_id" type="integer" >                
+        <cfquery name="page_data" datasource="cms_data"> 
+            DELETE FROM cms_data.page 
+            WHERE pageid=<cfqueryparam value="#arguments.page_id#" cfsqltype="CF_SQL_INTEGER"> 
+        </cfquery>                
+        <cfset local.recordDelete=true>
+        <cfreturn local.recordDelete>      
     </cffunction>
 
     <cffunction  name="upQuery" access="public" output="true" returntype="query">
-            <cfargument  name="id" type="integer">
-            <cfquery name="update_data" datasource="cms_data"> 
-                  SELECT * FROM cms_data.page
-                  WHERE pageid = <cfqueryparam value="#arguments.id#" cfsqltype="CF_SQL_INTEGER">
-              </cfquery>
-              <cfreturn update_data>
+        <cfargument  name="id" type="integer">
+        <cfquery name="update_data" datasource="cms_data"> 
+            SELECT * FROM cms_data.page
+            WHERE pageid = <cfqueryparam value="#arguments.id#" cfsqltype="CF_SQL_INTEGER">
+        </cfquery>
+        <cfreturn update_data>
     </cffunction>   
         
     <cffunction  name="subFunc" access="remote" output="false">
-            <cfargument  name="first_name" type="string">
-            <cfargument  name="email_id" type="string">
-            <cfquery name="validate_email" datasource="validate_email"  >
-                INSERT INTO validate_email.validate_data(first_name,email_id) 
-                VALUES(<cfqueryparam  value="#arguments.first_name#" cfsqltype="CF_SQL_VARCHAR">,
-                <cfqueryparam  value="#arguments.email_id#" cfsqltype="CF_SQL_VARCHAR">)
-            </cfquery>
-            <cflocation  url="../cf_task24.cfm?save=1">        
+        <cfargument  name="first_name" type="string">
+        <cfargument  name="email_id" type="string">
+        <cfquery name="validate_email" datasource="validate_email"  >
+            INSERT INTO validate_email.validate_data(first_name,email_id) 
+            VALUES(<cfqueryparam  value="#arguments.first_name#" cfsqltype="CF_SQL_VARCHAR">,
+            <cfqueryparam  value="#arguments.email_id#" cfsqltype="CF_SQL_VARCHAR">)
+        </cfquery>
+        <cflocation  url="../cf_task24.cfm?save=1">        
     </cffunction>   
 
     <cffunction name="uploadImg" access="remote" output="false">        
@@ -429,75 +428,81 @@
     </cffunction>
 
     <cffunction  name="empFunc" access="remote" output="false">        
-                <cfargument  name="position" type="string">                
-                <cfargument  name="Relocate" type="string">
-                <cfargument  name="dollar" type="string" required="no">
-                <cfargument  name="cents" type="string" required="no">        
-                <cfargument  name="cdate" type="date">
-                <cfargument  name="p_url" type="string">
-                <cfargument  name="f_name" type="string" >
-                <cfargument  name="l_name" type="string">
-                <cfargument  name="email" type="string">
-                <cfargument  name="phone" type="string" >
-                <cfargument  name="doc_file" type="string" >
-                
-                <cfset local.salary=#arguments.dollar# & '.' & #arguments.cents#>
-                <cfset local.thisDir = expandPath("../uploads")>
-                <cfif len(trim(#arguments.doc_file#)) >      
-                <!---<cfset salary=#arguments.dollar# & '.' & #arguments.cents#>--->        
-                        <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload" nameconflict="overwrite">
-                        <cfset local.file_name=fileupload.serverfile >
-                <cfelse>
-                        <cfset local.file_name="" >
-                </cfif>       
-                <cfquery name="subscribe" datasource="subscribe">
-                        INSERT INTO subscribe.subscribe(position,relocate,cdate,website,resume,salary,first_name,last_name,email_id,phone)
-                        VALUES (
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.position#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.Relocate#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.cdate#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.p_url#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.file_name#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#local.salary#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.f_name#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.l_name#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.email#">,
-                        <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.phone#">) 
-                </cfquery>
-                <cflocation  url="../cf_task23.cfm?Message=1">
+        <cfargument  name="position" type="string">                
+        <cfargument  name="Relocate" type="string">
+        <cfargument  name="dollar" type="string" required="no">
+        <cfargument  name="cents" type="string" required="no">        
+        <cfargument  name="cdate" type="date">
+        <cfargument  name="p_url" type="string">
+        <cfargument  name="f_name" type="string" >
+        <cfargument  name="l_name" type="string">
+        <cfargument  name="email" type="string">
+        <cfargument  name="phone" type="string" >
+        <cfargument  name="doc_file" type="string" >
+        <cfset local.salary=#arguments.dollar# & '.' & #arguments.cents#>
+        <cfset local.thisDir = expandPath("../uploads")>
+        <cfif len(trim(#arguments.doc_file#)) >      
+            <cffile action="upload" fileField="form.doc_file"  destination="#thisDir#" result="fileUpload" nameconflict="overwrite">
+            <cfset local.file_name=fileupload.serverfile >
+        <cfelse>
+            <cfset local.file_name="" >
+        </cfif>       
+        <cfquery name="subscribe" datasource="subscribe">
+            INSERT INTO subscribe.subscribe(position,relocate,cdate,website,resume,salary,first_name,last_name,email_id,phone)
+            VALUES (
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.position#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.Relocate#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.cdate#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.p_url#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.file_name#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#local.salary#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.f_name#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.l_name#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.email#">,
+            <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.phone#">) 
+        </cfquery>
+        <cflocation  url="../cf_task23.cfm?Message=1">
     </cffunction>
 
     <cffunction name="queryRes" output="true" returntype="query">
-            <cfquery name='page_data' datasource='cms_data'>
-                SELECT * FROM cms_data.page
-            </cfquery>
-            <cfreturn page_data>
+        <cfquery name='page_data' datasource='cms_data'>
+            SELECT * FROM cms_data.page
+        </cfquery>
+        <cfreturn page_data>
     </cffunction>
+
     <cffunction name="queryRes2" output="true" returntype="query">
-            <cfargument  name="id" type="integer">
-            <cfquery name='page_data' datasource='cms_data'>
-                SELECT * FROM cms_data.page WHERE pageid="#arguments.id#" 
-            </cfquery>
-            <cfreturn page_data>
-    </cffunction>  
+        <cfargument  name="id" type="integer">
+        <cfquery name='page_data' datasource='cms_data'>
+            SELECT * FROM cms_data.page WHERE pageid="#arguments.id#" 
+        </cfquery>
+        <cfreturn page_data>
+    </cffunction>
+
     <cffunction name="queryRes3" output="true" returntype="query">            
-            <cfquery name='page' datasource='word_data'>
-                    SELECT * FROM word_data.word_count 
-            </cfquery>
-            <cfreturn page>
+        <cfquery name='page' datasource='word_data'>
+            SELECT * FROM word_data.word_count 
+        </cfquery>
+        <cfreturn page>
     </cffunction> 
     
     <cffunction name="queryRes4" output="true" returntype="query">            
-            <cfquery name='page' datasource='read_data'>
-                SELECT * FROM read_data.read_count 
-            </cfquery>
-            <cfreturn page>
+        <cfquery name='page' datasource='read_data'>
+            SELECT * FROM read_data.read_count 
+        </cfquery>
+        <cfreturn page>
     </cffunction>
     
     <cffunction name="queryRes5" output="true" returntype="query">            
-            <cfquery name="img_data" datasource="img_data">
-                SELECT * FROM img_table
-            </cfquery>
-            <cfreturn img_data>
+        <cfquery name="img_data" datasource="img_data">
+            SELECT * FROM img_table
+        </cfquery>
+        <cfreturn img_data>
+    </cffunction>
+
+    <cffunction  name="scheduleMail" output="true">
+        <cfmail to="binsha.19nihas@gmail.com" from="binshasr3@gmail.com" subject="Good Morning" > 
+            <h2> Good Morning</h2>
+        </cfmail>
     </cffunction>
 </cfcomponent>

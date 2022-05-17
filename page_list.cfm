@@ -13,29 +13,29 @@
             <cfset data=createObject("component","components.res")>
             <cfset page_data=data.queryRes()>
             <div class='container'>
-                    <h3 class='text-center text-success mt-5'><cfoutput>Welcome #session.sessionUser.user_name#</cfoutput>
-                        <span class="lo-right"><a class='btn btn-success' href='cf_task28.cfm?logout'>Logout <i class="fa fa-sign-out"></i></a></span>
-                    </h3>                   
-                    <div class='page_container p-5'>
-                        <cfif structKeyExists(URL, 'update')>               
-                            <div class="alert alert-success alert-dismissible ">
-                                        <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                                        Updated Successfully
-                            </div>
-                        <cfelseif structKeyExists(URL, 'add')>
-                                <div class="alert alert-success alert-dismissible ">
-                                        <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                                        Page Added Successfully
-                            </div>
-                        <cfelseif structKeyExists(URL, 'delete')>
-                                <div class="alert alert-success alert-dismissible ">
-                                        <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                                        Page Deleted Successfully
-                            </div>                     
-                        </cfif> 
-                        <h3 class='text-center py-5'>Page Details</h3>
-                        <a href='add.cfm' class='btn btn-success text-right mb-3'>+ Add New Page</a>
-                        <table class='table table-bordered text-center '>
+                <h3 class='text-center text-success mt-5'><cfoutput>Welcome #session.sessionUser.user_name#</cfoutput>
+                    <span class="lo-right"><a class='btn btn-success' href='cf_task28.cfm?logout'>Logout <i class="fa fa-sign-out"></i></a></span>
+                </h3>                   
+                <div class='page_container p-5'>
+                    <cfif structKeyExists(URL, 'update')>               
+                        <div class="alert alert-success alert-dismissible ">
+                            <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                Updated Successfully
+                        </div>
+                    <cfelseif structKeyExists(URL, 'add')>
+                        <div class="alert alert-success alert-dismissible ">
+                            <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                Page Added Successfully
+                        </div>
+                    <cfelseif structKeyExists(URL, 'delete')>
+                        <div class="alert alert-success alert-dismissible ">
+                            <a href="##" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                Page Deleted Successfully
+                        </div>                     
+                    </cfif> 
+                    <h3 class='text-center py-5'>Page Details</h3>
+                    <a href='add.cfm' class='btn btn-success text-right mb-3'>+ Add New Page</a>
+                    <table class='table table-bordered text-center '>
                         <thead class='bg-dark text-white'>
                             <tr>
                                 <td>Page Name</td>
@@ -54,8 +54,8 @@
                             </tr>
                             </cfoutput>
                         </tbody>
-                        </table>
-                    </div>
+                    </table>
+                </div>
             </div>
         </cfif>
     </body>
